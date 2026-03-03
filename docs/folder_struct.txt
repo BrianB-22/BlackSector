@@ -1,0 +1,103 @@
+spacegame/
+│
+├── README.md
+├── LICENSE
+├── CONTRIBUTING.md
+│
+├── docs/
+│   ├── 00_overview/
+│   │   ├── vision.md
+│   │   ├── product_scope.md
+│   │   ├── design_principles.md
+│   │   └── terminology.md
+│   │
+│   ├── 01_architecture/
+│   │   ├── system_architecture.md
+│   │   ├── tick_engine.md
+│   │   ├── concurrency_model.md
+│   │   ├── persistence_model.md
+│   │   ├── procedural_generation.md
+│   │   └── security_model.md
+│   │
+│   ├── 02_universe/
+│   │   ├── galaxy_structure.md
+│   │   ├── system_generation.md
+│   │   ├── security_zones.md
+│   │   ├── anomaly_system.md
+│   │   └── region_partitioning.md
+│   │
+│   ├── 03_economy/
+│   │   ├── commodity_model.md
+│   │   ├── price_engine.md
+│   │   ├── ai_trader_model.md
+│   │   ├── supply_demand_model.md
+│   │   ├── economic_events.md
+│   │   └── balancing_guidelines.md
+│   │
+│   ├── 04_combat/
+│   │   ├── combat_requirements.md
+│   │   ├── combat_math_appendix.md
+│   │   ├── scanning_system.md
+│   │   ├── weapon_system.md
+│   │   ├── heat_energy_model.md
+│   │   └── engagement_flow.md
+│   │
+│   ├── 05_mining/
+│   │   ├── mining_system.md
+│   │   ├── hazard_system.md
+│   │   ├── drone_system.md
+│   │   └── resource_generation.md
+│   │
+│   ├── 06_exploration/
+│   │   ├── exploration_system.md
+│   │   ├── mapping_data_model.md
+│   │   ├── exploration_ships.md
+│   │   ├── rare_anomaly_events.md
+│   │   └── data_economy.md
+│   │
+│   ├── 07_missions/
+│   │   ├── mission_framework.md
+│   │   ├── event_injection.md
+│   │   ├── content_schema.md
+│   │   └── admin_controls.md
+│   │
+│   ├── 08_server/
+│   │   ├── headless_server_spec.md
+│   │   ├── session_management.md
+│   │   ├── command_queue.md
+│   │   ├── cli_management_tool.md
+│   │   ├── telemetry_logging.md
+│   │   └── deployment_model.md
+│   │
+│   ├── 09_protocol/
+│   │   ├── protocol_spec_v1.md
+│   │   ├── message_format.md
+│   │   ├── handshake_flow.md
+│   │   ├── ssh_adapter.md
+│   │   └── gui_adapter.md
+│   │
+│   ├── 10_data_models/
+│   │   ├── entity_models.md
+│   │   ├── database_schema.md
+│   │   ├── event_log_schema.md
+│   │   └── snapshot_format.md
+│   │
+│   ├── 11_balancing/
+│   │   ├── combat_balance.md
+│   │   ├── economy_balance.md
+│   │   ├── mining_yield_curves.md
+│   │   └── simulation_parameters.md
+│   │
+│   └── 12_roadmap/
+│       ├── milestone_plan.md
+│       ├── phase_1_vertical_slice.md
+│       ├── phase_2_expansion.md
+│       └── technical_debt_log.md
+│
+└── src/
+    ├── server/
+    ├── simulation/
+    ├── domain/
+    ├── adapters/
+    ├── cli/
+    └── persistence/
