@@ -314,5 +314,6 @@ Replay test must confirm identical propulsion behavior across runs.
 All future additions must preserve tradeoff-driven design.
 
 ---
+See: warp_mechanics.md for sector traversal rules.
 
 # End of Document
