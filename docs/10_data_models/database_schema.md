@@ -1,6 +1,6 @@
 # Database Schema Specification
 
-## Version: 0.2
+## Version: 0.3
 
 ## Status: Draft
 
@@ -232,7 +232,9 @@ CREATE TABLE ports (
   name           TEXT NOT NULL,
   port_type      TEXT NOT NULL,
   security_level REAL NOT NULL,
-  docking_fee    INTEGER NOT NULL DEFAULT 0
+  docking_fee             INTEGER NOT NULL DEFAULT 0,
+  has_bank                INTEGER NOT NULL DEFAULT 0,
+  interest_rate_percent   REAL NOT NULL DEFAULT 0.0
 );
 ```
 
@@ -585,7 +587,45 @@ CREATE INDEX idx_drone_telemetry_owner   ON drone_telemetry (owner_id, delivered
 
 ---
 
-# 15. Performance Indexes
+# 15. Banking Domain
+
+## Table: player_bank_accounts
+
+```sql
+CREATE TABLE player_bank_accounts (
+  account_id          TEXT PRIMARY KEY,
+  player_id           TEXT NOT NULL REFERENCES players(player_id),
+  port_id             INTEGER NOT NULL REFERENCES ports(port_id),
+  balance             INTEGER NOT NULL DEFAULT 0,
+  opened_at_tick      INTEGER NOT NULL,
+  last_interest_tick  INTEGER NOT NULL DEFAULT 0,
+  UNIQUE (player_id, port_id)
+);
+```
+
+---
+
+## Table: bank_transactions
+
+Audit log for all banking activity.
+
+```sql
+CREATE TABLE bank_transactions (
+  transaction_id        TEXT PRIMARY KEY,
+  player_id             TEXT NOT NULL REFERENCES players(player_id),
+  port_id               INTEGER REFERENCES ports(port_id),
+  transaction_type      TEXT NOT NULL,  -- deposit | withdraw | transfer_out | transfer_in | interest | send | receive
+  amount                INTEGER NOT NULL,
+  balance_after         INTEGER NOT NULL,
+  counterparty_id       TEXT REFERENCES players(player_id),
+  counterparty_port_id  INTEGER REFERENCES ports(port_id),
+  tick                  INTEGER NOT NULL
+);
+```
+
+---
+
+# 16. Performance Indexes
 
 ```sql
 CREATE INDEX idx_sessions_player    ON sessions (player_id);
@@ -600,11 +640,14 @@ CREATE INDEX idx_events_end_tick    ON active_economic_events (end_tick);
 CREATE INDEX idx_anomalies_system   ON anomalies (system_id);
 CREATE INDEX idx_fields_system      ON asteroid_fields (system_id);
 CREATE INDEX idx_waypoints_player   ON player_waypoints (player_id);
+CREATE INDEX idx_bank_accounts_player ON player_bank_accounts (player_id);
+CREATE INDEX idx_bank_tx_player     ON bank_transactions (player_id);
+CREATE INDEX idx_bank_tx_tick       ON bank_transactions (tick);
 ```
 
 ---
 
-# 16. Configuration Data (Not Stored in Database)
+# 17. Configuration Data (Not Stored in Database)
 
 The following are loaded from JSON config files at startup and are NOT in the database:
 
@@ -622,7 +665,7 @@ These may be hot-reloaded via the admin CLI without a server restart.
 
 ---
 
-# 17. Non-Goals (v1)
+# 18. Non-Goals (v1)
 
 * Full-text search
 * Replication or read replicas

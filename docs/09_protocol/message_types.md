@@ -1,5 +1,5 @@
 # Message Types Specification
-## Version: 0.2
+## Version: 0.3
 ## Status: Draft
 ## Owner: Core Architecture
 ## Last Updated: 2026-03-04
@@ -140,7 +140,20 @@ Note: Drone commands are submitted via `command_submit` with `command: "drone_co
 
 ---
 
-# 12. Error Messages
+# 12. Banking Messages
+
+Represent bank account operations and notifications.
+
+Examples:
+
+bank_interest_credited
+bank_payment_received
+
+Note: All banking commands are submitted via `command_submit`. Banking messages are server-initiated notifications only (interest accrual, incoming payments).
+
+---
+
+# 13. Error Messages
 
 Examples:
 
