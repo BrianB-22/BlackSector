@@ -6,7 +6,13 @@
 
 ## Owner: Economy Systems
 
+## Phase: **2** (not implemented in Phase 1)
+
 ## Last Updated: 2026-03-03
+
+---
+
+> **Phase 1 Note:** Phase 1 uses static commodity prices defined in `docs/15_roadmap/phase_1_vertical_slice.md` Section 5. This price engine (dynamic pricing) is a Phase 2 feature. Do not implement during Phase 1 development.
 
 ---
 
@@ -227,8 +233,8 @@ Corrected during next update cycle.
 
 System must support:
 
-* 10,000+ ports
-* 50+ commodities
+* up to 1,000 ports
+* 10–50 commodities
 * frequent price updates
 
 Price calculation must remain under 5 ms per economic tick.

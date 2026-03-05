@@ -60,12 +60,12 @@ Profit potential should increase with risk.
 
 General target model:
 
-| Security Zone | Expected Profit |
-| ------------- | --------------- |
-| Federal/Core  | Low             |
-| Controlled    | Moderate        |
-| Frontier      | High            |
-| Black Sector  | Very High       |
+| Security Zone   | Expected Profit |
+| --------------- | --------------- |
+| High Security   | Low             |
+| Medium Security | Moderate        |
+| Low Security    | High            |
+| Black Sector    | Very High       |
 
 Dangerous regions should consistently offer higher economic opportunity.
 

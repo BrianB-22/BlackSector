@@ -59,11 +59,18 @@ OUT OF SCOPE:
 
 # 4. Transport Model
 
-Supported transports (v1):
+The server listens on two ports with distinct purposes:
 
-- SSH (primary)
-- Telnet (legacy optional)
-- Direct TCP (future GUI support)
+| Port | Default | Transport | Interface Mode | Client         |
+| ---- | ------- | --------- | -------------- | -------------- |
+| SSH  | 2222    | SSH       | TEXT           | Any SSH client |
+| GUI  | 2223    | TLS/TCP   | GUI            | GUI application |
+
+**SSH port (2222) is the primary interface in v1.** Black Sector is a rich text-based game accessed via SSH. No dedicated client is required.
+
+**TCP port (2223) is reserved for future GUI clients.** The architecture supports it from day one; the GUI client itself is future scope.
+
+Interface mode is determined by which port the client connects to. It is not negotiated during the handshake.
 
 Transport layer must not alter protocol semantics.
 
@@ -93,7 +100,7 @@ Compatibility rules:
 
 ## 6.1 Server → Client (Greeting)
 
-On connect, server sends:
+On connect, server sends (interface_mode reflects the port connected to):
 
 {
 
@@ -101,9 +108,11 @@ On connect, server sends:
 
      "protocol\_version": "1.0",
 
-     "supported\_modes": \["TEXT", "GUI"],
+     "interface\_mode": "TEXT",
 
-     "server\_capabilities": \[...]
+     "server\_name": "Black Sector",
+
+     "motd": "..."
 
 }
 
@@ -119,9 +128,13 @@ Client responds with:
 
      "protocol\_version": "1.0",
 
-     "interface\_mode": "TEXT",
+     "correlation\_id": "\<uuid\>",
 
-     "client\_capabilities": \[...]
+     "payload": {
+
+       "player\_token": "\<auth\_token\>"
+
+     }
 
 }
 
@@ -337,15 +350,20 @@ GUI must respect protocol message envelope strictly.
 
 # 13. Rate Limiting \& Security
 
+Rate limits are enforced per connection. Since one player may have only one active session at a time, this is effectively per-player.
+
 Server enforces:
 
-- Max commands per tick per session.
-- Max malformed messages per minute.
+- Max commands per tick per connection (default: 3).
+- Max malformed messages per minute (default: 10).
+- Max handshake attempts per IP per minute (default: 5).
 - Disconnect on repeated protocol violations.
 
 Invalid message format → immediate rejection.
 
-Authentication occurs before gameplay commands allowed.
+Authentication (player\_token) must be validated before gameplay commands are accepted.
+
+See `rate\_limiting.md` and `session\_multiplexing.md`.
 
 ---
 

@@ -118,7 +118,7 @@ The process of improving knowledge about a detected signal until an object can b
 - source_object_id: UUID
 - signal_type: enum
 - signal_strength: float
-- position: Vector3
+- position: Vector2
 
 ---
 
@@ -129,7 +129,7 @@ Transient
 - contact_id: UUID
 - player_id: UUID
 - signal_type: enum
-- estimated_direction: Vector3
+- estimated_direction: Vector2
 - estimated_distance: float
 - resolution_progress: float
 

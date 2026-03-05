@@ -316,8 +316,8 @@ Demand pressure capped at configured maximum.
 
 System must support:
 
-* 10,000+ ports
-* 50+ commodities
+* up to 1,000 ports
+* 10–50 commodities
 * near-real-time updates
 
 Evaluation cost must remain below 10 ms per cycle.

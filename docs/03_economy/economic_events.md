@@ -307,7 +307,7 @@ Duration clamped to maximum allowed value.
 
 System must support:
 
-* evaluation across thousands of ports
+* evaluation across up to 1,000 ports
 * multiple concurrent events
 * near-zero impact on economic tick performance
 

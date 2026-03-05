@@ -283,14 +283,12 @@ Port skipped and error logged.
 
 Economic tick must support:
 
-* 10,000+ ports
-* 50,000+ commodity updates per tick
+* up to 1,000 ports
+* up to 50,000 commodity updates per tick
 
 Target runtime:
 
 < 50 ms per tick cycle.
-
-Processing must be parallelizable across worker threads.
 
 ---
 

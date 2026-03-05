@@ -30,8 +30,9 @@ The Mining subsystem is composed of four modular specifications:
 
 - mining_system.md
 - hazard_system.md
-- drone_system.md
 - resource_generation.md
+
+Drone mechanics (prospecting drones) are defined in `docs/12_communications/communications_system.md` Section 14.
 
 Each subsystem has a distinct responsibility:
 

@@ -126,10 +126,10 @@ economic_rating: float
 
 Persistent
 
-object_id: UUID  
-system_id: UUID  
-object_type: enum  
-position: Vector3  
+object_id: UUID
+system_id: UUID
+object_type: enum
+position: Vector2
 discovery_state: enum
 
 Examples of system objects include:

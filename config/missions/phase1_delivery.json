@@ -1,0 +1,144 @@
+{
+  "missions": [
+    {
+      "mission_id": "delivery_food_high_sec_01",
+      "name": "Food Shipment — High Priority",
+      "description": "A mining colony is running short on food supplies. Deliver 15 units to their port.",
+      "version": "1.0.0",
+      "author": "core",
+      "enabled": true,
+      "repeatable": true,
+      "repeat_cooldown_ticks": 150,
+      "security_zones": ["high"],
+      "expiry_ticks": 500,
+      "objectives": [
+        {
+          "objective_id": "deliver_food",
+          "type": "deliver_commodity",
+          "description": "Deliver 15 units of food supplies to the designated mining port.",
+          "parameters": {
+            "commodity_id": "food_supplies",
+            "quantity": 15,
+            "port_id": "WORLD_CONFIG_PORT_ID"
+          },
+          "failure_condition": null
+        }
+      ],
+      "rewards": {
+        "credits": 800
+      }
+    },
+    {
+      "mission_id": "delivery_ore_industrial_01",
+      "name": "Ore Consignment — Industrial Order",
+      "description": "A trading hub needs raw ore for processing. Deliver 20 units and earn a premium.",
+      "version": "1.0.0",
+      "author": "core",
+      "enabled": true,
+      "repeatable": true,
+      "repeat_cooldown_ticks": 150,
+      "security_zones": ["high"],
+      "expiry_ticks": 500,
+      "objectives": [
+        {
+          "objective_id": "deliver_ore",
+          "type": "deliver_commodity",
+          "description": "Deliver 20 units of raw ore to the designated trading port.",
+          "parameters": {
+            "commodity_id": "raw_ore",
+            "quantity": 20,
+            "port_id": "WORLD_CONFIG_PORT_ID"
+          },
+          "failure_condition": null
+        }
+      ],
+      "rewards": {
+        "credits": 1000
+      }
+    },
+    {
+      "mission_id": "delivery_fuel_low_sec_01",
+      "name": "Fuel Run — Dangerous Route",
+      "description": "An isolated refueling post in low security space needs fuel cells. High risk, high reward.",
+      "version": "1.0.0",
+      "author": "core",
+      "enabled": true,
+      "repeatable": true,
+      "repeat_cooldown_ticks": 100,
+      "security_zones": ["low"],
+      "expiry_ticks": 400,
+      "objectives": [
+        {
+          "objective_id": "deliver_fuel",
+          "type": "deliver_commodity",
+          "description": "Deliver 10 units of fuel cells to the low security refueling post.",
+          "parameters": {
+            "commodity_id": "fuel_cells",
+            "quantity": 10,
+            "port_id": "WORLD_CONFIG_PORT_ID"
+          },
+          "failure_condition": null
+        }
+      ],
+      "rewards": {
+        "credits": 2000
+      }
+    },
+    {
+      "mission_id": "delivery_electronics_01",
+      "name": "Electronics Delivery — Mining Contract",
+      "description": "A mining operation urgently needs electronics for equipment repairs.",
+      "version": "1.0.0",
+      "author": "core",
+      "enabled": true,
+      "repeatable": true,
+      "repeat_cooldown_ticks": 200,
+      "security_zones": ["high"],
+      "expiry_ticks": 600,
+      "objectives": [
+        {
+          "objective_id": "deliver_electronics",
+          "type": "deliver_commodity",
+          "description": "Deliver 5 units of electronics to the designated mining port.",
+          "parameters": {
+            "commodity_id": "electronics",
+            "quantity": 5,
+            "port_id": "WORLD_CONFIG_PORT_ID"
+          },
+          "failure_condition": null
+        }
+      ],
+      "rewards": {
+        "credits": 1800
+      }
+    },
+    {
+      "mission_id": "delivery_luxury_prestige_01",
+      "name": "Luxury Cargo — Prestige Run",
+      "description": "A wealthy client needs luxury goods delivered discreetly to a remote trading post.",
+      "version": "1.0.0",
+      "author": "core",
+      "enabled": true,
+      "repeatable": true,
+      "repeat_cooldown_ticks": 300,
+      "security_zones": ["high", "low"],
+      "expiry_ticks": 800,
+      "objectives": [
+        {
+          "objective_id": "deliver_luxury",
+          "type": "deliver_commodity",
+          "description": "Deliver 3 units of luxury goods to the designated port.",
+          "parameters": {
+            "commodity_id": "luxury_goods",
+            "quantity": 3,
+            "port_id": "WORLD_CONFIG_PORT_ID"
+          },
+          "failure_condition": null
+        }
+      ],
+      "rewards": {
+        "credits": 3500
+      }
+    }
+  ]
+}

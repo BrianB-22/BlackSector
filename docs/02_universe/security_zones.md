@@ -1,10 +1,10 @@
 # Security Zones Specification
 
-## Version: 0.1
+## Version: 0.2
 ## Status: Draft
 ## Owner: Core Simulation
 
-## Last Updated: 2026-03-02
+## Last Updated: 2026-03-05
 
 ---
 
@@ -60,6 +60,14 @@ Each star system has:
 
 SecurityRating ∈ \[0.0 – 1.0]
 
+OR
+
+SecurityRating = NULL (Black Sector — unclassified, unmonitored space)
+
+OR
+
+SecurityRating = 2.0 (Federated Space — special fixed zone, above the normal scale)
+
 SecurityRating influences:
 
 - Mining yield multiplier
@@ -71,19 +79,29 @@ SecurityRating influences:
 
 SecurityRating is assigned during procedural generation and is immutable in v1.
 
+Black Sector systems are rare and treated as a distinct classification outside the normal rating scale.
+
 ---
 
 # 5. Zone Classification
 
 Security zones are grouped as:
 
-High Security  
+Federated Space *(new player starting area, center of galaxy)*
 
-Medium Security  
+High Security
 
-Low Security  
+Medium Security
+
+Low Security
+
+Black Sector
 
 Thresholds (configurable):
+
+Federated Space:
+
+SecurityRating = 2.0 (special fixed value — not procedurally generated)
 
 High Security:
 
@@ -97,11 +115,47 @@ Low Security:
 
 0.0 – 0.4
 
+Black Sector:
+
+SecurityRating = NULL (not on the 0.0–1.0 scale)
+
 Zone classification derived from SecurityRating.
+
+Black Sector systems are procedurally seeded but rare. They represent the game's namesake extreme — space that exists outside any known authority or mapping.
+
+Federated Space systems are hand-placed at the center of the galaxy and defined in world config, not generated procedurally. They are the safe starting zone for new players.
 
 ---
 
-# 6. High Security Zone Rules
+# 6. Federated Space Zone Rules
+
+Federated Space is a fixed cluster of government-controlled systems at the center of the galaxy. It is the starting zone for all new players and the safest area in the game.
+
+Characteristics:
+
+- No pirate spawns — NPC patrol coverage enforced
+- PvP fully disabled — combat between players is blocked server-side
+- Full IRN relay coverage (100% reliability, ×1.0 delay)
+- Economy is highly stable, low volatility
+- Mining yields are very low (Federated Space is not a resource zone)
+- Contains the origin starbase (new player spawn, standard-mode respawn)
+- Ships can always jump back to Federated Space from anywhere in the galaxy
+
+Gameplay effects:
+
+- SecurityYieldModifier: 0.3 (very low — farming Federated Space is intentionally unproductive)
+- PirateActivityBase: 0 (no pirates)
+- PvP: disabled
+- IRN Reliability: 100%
+- Drone availability: all types stocked at origin starbase
+
+Federated Space must feel safe, stable, and welcoming — but not a place to get rich.
+
+See `docs/01_architecture/ship_system.md` for starting state and respawn details.
+
+---
+
+# 7. High Security Zone Rules
 
 Characteristics:
 
@@ -122,7 +176,7 @@ High Security must feel stable, not profitable.
 
 ---
 
-# 7. Medium Security Zone Rules
+# 8. Medium Security Zone Rules
 
 Characteristics:
 
@@ -142,7 +196,7 @@ Medium Security is transitional space.
 
 ---
 
-# 8. Low Security Zone Rules
+# 9. Low Security Zone Rules
 
 Characteristics:
 
@@ -163,7 +217,33 @@ Low Security must feel lucrative but unstable.
 
 ---
 
-# 9. PvP Behavior Model by Zone
+# 10. Black Sector Zone Rules
+
+Characteristics:
+
+- No security rating
+- Contraband markets active
+- Extreme mining yield variance
+- Maximum hazard probability
+- Maximum pirate spawn rate
+- Rare and exotic commodity presence
+- No law enforcement of any kind
+- PvP unrestricted and expected
+
+Gameplay effects:
+
+- Highest RareMineralChance in the game
+- Extreme economic volatility
+- Contraband goods tradeable without restriction
+- Survival is not guaranteed
+
+Black Sector must feel lawless, ancient, and dangerous.
+
+These are the systems the game is named after.
+
+---
+
+# 11. PvP Behavior Model by Zone
 
 High Security:
 
@@ -182,11 +262,17 @@ Low Security:
 - No penalties
 - Increased pirate overlap
 
+Black Sector:
+
+- PvP constant
+- No rules
+- Entering is a deliberate risk decision
+
 Zone must shape behavior indirectly, not hard-disable PvP.
 
 ---
 
-# 10. Mining \& Resource Scaling
+# 12. Mining \& Resource Scaling
 
 Security influences:
 
@@ -204,15 +290,21 @@ Low:
 
 1.3 (configurable)
 
+Black Sector:
+
+2.0+ (extreme variance, configurable)
+
 RareMineralChance scaled by:
 
 (1 − SecurityRating)
 
 Lower security increases rare discovery probability.
 
+Black Sector uses maximum RareMineralChance with high variance — yields may be extraordinary or nearly nothing.
+
 ---
 
-# 11. Hazard Scaling
+# 13. Hazard Scaling
 
 HazardProbability:
 
@@ -226,11 +318,15 @@ Low Security:
 
 Frequent hazards
 
+Black Sector:
+
+Constant hazards — assumed hostile environment
+
 Hazard intensity may scale with zone.
 
 ---
 
-# 12. Pirate Activity Scaling
+# 14. Pirate Activity Scaling
 
 Pirate spawn probability scaled by:
 
@@ -245,9 +341,14 @@ High Security:
 
 - Rare pirate presence
 
+Black Sector:
+
+- Maximum pirate density
+- Ambush assumed, not exceptional
+
 ---
 
-# 13. Economic Volatility Model
+# 15. Economic Volatility Model
 
 Security influences:
 
@@ -264,9 +365,15 @@ High Security:
 
 - Stabilized market behavior
 
+Black Sector:
+
+- Extreme volatility
+- Contraband goods tradeable
+- No price floor enforcement
+
 ---
 
-# 14. Detection \& Exposure Impact
+# 16. Detection \& Exposure Impact
 
 Security zones may influence:
 
@@ -281,7 +388,7 @@ Low Security systems may:
 
 ---
 
-# 15. Persistence Interaction
+# 17. Persistence Interaction
 
 SecurityRating is:
 
@@ -293,7 +400,7 @@ Dynamic modification not supported in v1.
 
 ---
 
-# 16. Determinism Requirements
+# 18. Determinism Requirements
 
 Given:
 
@@ -306,7 +413,7 @@ No runtime randomness allowed in assignment.
 
 ---
 
-# 17. Performance Constraints
+# 19. Performance Constraints
 
 Security zone effects must:
 
@@ -318,7 +425,7 @@ Zone logic applied during subsystem resolution.
 
 ---
 
-# 18. Testing Requirements
+# 20. Testing Requirements
 
 Tests must verify:
 
@@ -328,12 +435,14 @@ Tests must verify:
 - Pirate scaling correctness
 - Rare mineral scaling correctness
 - Deterministic assignment
+- Black Sector correctly identified by NULL SecurityRating
+- Black Sector modifiers applied independently of rating scale
 
 Replay tests must confirm identical behavior across runs.
 
 ---
 
-# 19. Non-Goals (v1)
+# 21. Non-Goals (v1)
 
 - Dynamic security shifts
 - Law enforcement AI fleets
@@ -343,7 +452,7 @@ Replay tests must confirm identical behavior across runs.
 
 ---
 
-# 20. Future Extensions
+# 22. Future Extensions
 
 - Dynamic security drift
 - Regional instability waves

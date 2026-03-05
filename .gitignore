@@ -1,0 +1,21 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Claude Code worktrees and session data
+.claude/
+
+# Editor
+.vscode/
+*.swp
+*.swo
+
+# Build output
+bin/
+dist/
+
+# Go
+*.test
+*.out
+vendor/

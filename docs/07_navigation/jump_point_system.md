@@ -106,7 +106,7 @@ Persistent
 
 jump_point_id: UUID  
 system_id: UUID  
-position: Vector3  
+position: Vector2
 destination_jump_id: UUID  
 discovery_state: enum  
 stability_rating: float  

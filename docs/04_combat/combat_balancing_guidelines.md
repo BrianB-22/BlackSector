@@ -176,50 +176,33 @@ Large ships should excel in:
 * durability
 * firepower
 * sustained combat
-* fleet support
 
 Large ships should not be stealthy but should be difficult to destroy.
 
 They often rely on:
 
-* escorts
 * defensive systems
-* sensor support
+* heat management
+* energy reserves
 
 ---
 
-# 11. Fleet Combat Philosophy
-
-Fleet engagements should emphasize coordination.
-
-Important roles may include:
-
-* reconnaissance ships
-* electronic warfare vessels
-* heavy combat ships
-* support craft
-
-Fleet composition should matter more than raw ship count.
-
----
-
-# 12. Combat Duration
+# 11. Combat Duration
 
 Combat should not resolve instantly.
 
 Typical engagement durations should allow:
 
 * tactical repositioning
-* reinforcement arrival
 * disengagement attempts
+* weapon cooldown decisions
 
 Average engagement time targets:
 
-| Engagement Type | Duration        |
-| --------------- | --------------- |
-| Small skirmish  | 30–90 seconds   |
-| Trader ambush   | 20–60 seconds   |
-| Fleet battle    | several minutes |
+| Engagement Type | Duration      |
+| --------------- | ------------- |
+| Small skirmish  | 30–90 seconds |
+| Trader ambush   | 20–60 seconds |
 
 Combat should feel meaningful rather than instantaneous.
 

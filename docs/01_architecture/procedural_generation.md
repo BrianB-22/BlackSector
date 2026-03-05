@@ -109,11 +109,16 @@ Each system assigned:
 
 SecurityRating ∈ \[0.0 – 1.0]
 
+OR
+
+SecurityRating = NULL (Black Sector)
+
 Zones:
 
 - High Security (0.7 – 1.0)
 - Medium Security (0.4 – 0.7)
 - Low Security (0.0 – 0.4)
+- Black Sector (NULL — unclassified, unmonitored)
 
 Security influences:
 
@@ -124,6 +129,8 @@ Security influences:
 - PvP density
 
 Security distribution must form clusters, not pure random scatter.
+
+Black Sector systems are rare. They must appear at the galaxy's outer edges or in isolated pockets unreachable by normal trade routes.
 
 ---
 

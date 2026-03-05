@@ -243,7 +243,7 @@ Routes with higher scores are preferred.
 
 # 9. Tunable Parameters
 
-TargetTraderPopulation = 500
+TargetTraderPopulation = 50
 
 TraderEvaluationInterval = 120 seconds
 
@@ -281,7 +281,6 @@ Used By:
 * piracy gameplay
 * mission generation
 * economic analytics
-* faction intelligence systems
 
 ---
 
@@ -308,7 +307,7 @@ Trader recalculates route.
 
 System must support:
 
-* 500–5,000 AI traders
+* 50–200 AI traders
 * real-time navigation updates
 * route evaluation under 2ms per trader
 

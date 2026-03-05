@@ -1,10 +1,10 @@
 # Engagement Flow Specification
 
-## Version: 0.2
+## Version: 0.3
 ## Status: Draft
 ## Owner: Core Simulation
 
-## Last Updated: 2026-03-02
+## Last Updated: 2026-03-05
 
 ---
 
@@ -284,13 +284,54 @@ Conditions must persist for N ticks.
 
 Any weapon fire or hard maneuver resets countdown.
 
-## 13.3 Resolution
+## 13.3 Flee Command (Phase 1 — NPC Combat)
 
-On success:
+During NPC pirate combat, the player may issue the `flee` command to attempt an emergency disengage.
+
+```
+flee                — attempt to break combat immediately
+```
+
+Flee is resolved once per tick as a probability check:
+
+```
+FleeChance = flee_base_chance + (energy_current / max_energy × flee_energy_bonus)
+```
+
+Default values (configured in `server.json`):
+
+```json
+"combat": {
+  "flee_base_chance": 0.35,
+  "flee_energy_bonus": 0.25
+}
+```
+
+This gives a range of ~35% (no energy) to ~60% (full energy).
+
+**On flee success:**
+
+- CombatInstance → DISENGAGED
+- Jump re-enabled (no cooldown on successful flee)
+- Player notified: `You have broken off the engagement and escaped.`
+
+**On flee failure:**
+
+- Combat continues for this tick
+- Pirate fires normally
+- Player may attempt `flee` again next tick
+
+**Flee is not available** while a jump is already in progress or after `surrender` has been issued.
+
+**Flee does not prevent pirate weapon fire on the same tick** — the pirate fires before the flee check resolves.
+
+## 13.4 Resolution
+
+On success (flee or natural disengage):
 
 - CombatInstance → DISENGAGED
 - Jump re-enabled
-- Short cooldown applied
+- Short cooldown applied (natural disengage only)
 
 Disengagement represents successful break of predictive model, not visual escape.
 

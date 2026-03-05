@@ -40,7 +40,7 @@ Clients apply updates incrementally.
 
 # 4. Recovery Model
 
-Clients reconnecting must request initial state snapshot.
+Server delivers an initial state snapshot to clients on reconnect automatically.
 
 Future versions may support delta compression.
 
