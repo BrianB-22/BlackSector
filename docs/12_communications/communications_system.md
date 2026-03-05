@@ -106,7 +106,37 @@ Recipient list is determined server-side at time of transmission. Sender does no
 
 ---
 
-# 6. System Broadcast
+# 6. System Presence
+
+## 6.1 Who Command
+
+Players may query who else is currently in their system.
+
+```
+who                 — list all players present in the current star system
+```
+
+Output format:
+
+```
+Players in Vega Prime (Low Security):
+  nova          [undocked — sector 14-C]
+  ghost         [docked at Port Helios]
+  xander        [undocked — sector 9-A]
+```
+
+Rules:
+
+* Shows only players whose ships are in the **same star system** as the caller
+* Ships in SILENT mode are **not listed** (their sensor signature is suppressed)
+* Ships in combat are listed normally
+* Docked ships are visible and their port is shown
+* Undocked ships show their sector within the system
+* No exposure penalty for using `who` — it reads passive sensor returns, not active ping
+
+`who` output is generated server-side from current ship positions. It reflects the state at the tick the command is processed.
+
+## 6.2 System Broadcast
 
 Sent to all players currently in the same star system.
 

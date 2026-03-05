@@ -1,6 +1,6 @@
 # Phase 1: Vertical Slice
 
-## Version: 0.1
+## Version: 0.2
 
 ## Status: Draft
 
@@ -67,7 +67,26 @@ Features not included in Phase 1 are deferred to Phase 2, not because they are u
 * Ship destruction (player loses cargo and credits penalty; respawns at nearest port)
 * NPC destruction (no loot in Phase 1)
 
-## 3.6 Interface
+## 3.6 Delivery Missions
+
+* Simple repeatable `deliver_commodity` missions available at ports
+* Player accepts a mission board listing at the current port
+* Each mission: deliver N units of commodity X to port Y, receive Z credits reward
+* Commodity must be purchased by the player — mission does not supply it
+* Missions are repeatable with a cooldown (configurable per mission)
+* Active mission tracked in player state — only one active mission at a time (Phase 1)
+* Commands:
+
+```
+missions            — list available missions at current port
+missions accept <id>  — accept a mission
+missions status     — show current active mission and progress
+missions abandon    — abandon the current active mission
+```
+
+Mission files in `config/missions/`. Phase 1 includes a starter set defined in `config/missions/phase1_delivery.json`. See `docs/08_missions/content_schema.md` for the full schema.
+
+## 3.7 Interface
 
 * Full TEXT mode terminal interface
 * ANSI color rendering for system maps, ship status, market listings
@@ -75,7 +94,7 @@ Features not included in Phase 1 are deferred to Phase 2, not because they are u
 * Status bar showing: system, credits, hull/shields/energy
 * Help system (`help` command lists available commands)
 
-## 3.7 Server
+## 3.8 Server
 
 * SSH listener on port 2222
 * Handshake and session management
@@ -96,7 +115,7 @@ Features not included in Phase 1 are deferred to Phase 2, not because they are u
 | AI traders                 | Phase 2       |
 | Mining                     | Phase 2       |
 | Exploration and scanning   | Phase 2       |
-| Missions                   | Phase 2       |
+| Complex missions (kill, scan, multi-step) | Phase 2 |
 | Multiple regions           | Phase 2       |
 | Black Sector               | Phase 2       |
 | Medium Security space      | Phase 2       |
@@ -141,7 +160,25 @@ The Federated Space origin starbase carries all 7 commodities at base price as a
 
 ## 5.2 Static Price Table
 
-Prices do not change in Phase 1. The base prices from Section 5 apply uniformly at all ports:
+Prices do not change dynamically in Phase 1, but they vary by security zone. Low Security ports pay and charge more than High Security ports, rewarding players who accept the risk of dangerous space.
+
+**Zone price multiplier:**
+
+| Zone             | Multiplier | Notes                               |
+| ---------------- | ---------- | ----------------------------------- |
+| Federated Space  | 1.00×      | Reference market — base prices      |
+| High Security    | 1.00×      | Standard market                     |
+| Low Security     | 1.18×      | ~18% premium on all prices          |
+
+Configurable in `server.json`:
+
+```json
+"economy": {
+  "low_sec_price_multiplier": 1.18
+}
+```
+
+**High Security / Federated Space prices:**
 
 | Commodity      | Base Price | Buy Price (port sells) | Sell Price (port buys) |
 | -------------- | ---------- | ---------------------- | ---------------------- |
@@ -153,7 +190,27 @@ Prices do not change in Phase 1. The base prices from Section 5 apply uniformly 
 | electronics    | 800        | 880                    | 720                    |
 | luxury_goods   | 1500       | 1650                   | 1350                   |
 
-Buy/sell spread is 10% above/below base price (configurable per port type in world config). This is the profit margin for trade runs.
+**Low Security effective prices (base × 1.18, rounded):**
+
+| Commodity      | Buy Price (port sells) | Sell Price (port buys) |
+| -------------- | ---------------------- | ---------------------- |
+| food_supplies  | 130                    | 106                    |
+| fuel_cells     | 195                    | 159                    |
+| raw_ore        | 104                    | 85                     |
+| refined_ore    | 312                    | 255                    |
+| machinery      | 779                    | 637                    |
+| electronics    | 1038                   | 850                    |
+| luxury_goods   | 1947                   | 1593                   |
+
+Buy/sell spread is 10% above/below the zone-adjusted price:
+
+```
+zone_price = floor(base_price × zone_multiplier)
+buy_price  = floor(zone_price × 1.10)
+sell_price = floor(zone_price × 0.90)
+```
+
+The zone multiplier is the primary reason to trade in Low Security space.
 
 ---
 
@@ -178,6 +235,7 @@ Phase 1 is complete when:
 
 * A new player can SSH in and have a functional character within 2 minutes
 * A player can complete a profitable trade run between two ports
+* A player can accept, complete, and be rewarded for a delivery mission
 * A player can survive or die to an NPC pirate and continue playing after death
 * 5 concurrent players can play simultaneously without server errors
 * Server survives restart and restores state from snapshot with no data loss

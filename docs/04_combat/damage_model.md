@@ -1,12 +1,12 @@
 # Damage Model Specification
 
-## Version: 0.2
+## Version: 0.3
 
 ## Status: Draft
 
 ## Owner: Combat Systems
 
-## Last Updated: 2026-03-03
+## Last Updated: 2026-03-05
 
 ---
 
@@ -105,7 +105,38 @@ Configured in `server.json`:
 }
 ```
 
-## 4.5 Ship Destruction
+## 4.5 Repair Command
+
+Hull can only be repaired while **docked at a port with `has_repair = true`**. Repair is not available during combat (`IN_COMBAT`).
+
+Commands:
+
+```
+repair              — show hull status, shield status, and cost to fully repair hull
+repair confirm      — pay repair cost and restore hull to max_hull_points
+```
+
+Repair cost formula (same as Section 4.4):
+
+```
+cost = floor((max_hull_points - hull_points) × hull_repair_cost_per_point)
+```
+
+If hull is already at maximum, `repair` reports no damage and `repair confirm` is rejected.
+
+`repair` output example:
+
+```
+Hull:    72 / 100  (28 pts damaged)
+Shield:  recharging (out of combat)
+Repair cost: 280 cr
+
+Use 'repair confirm' to pay and restore hull.
+```
+
+Partial repair is not supported in Phase 1 — repair always restores to full.
+
+## 4.7 Ship Destruction
 
 When `hull_points` reaches 0:
 
@@ -113,7 +144,7 @@ When `hull_points` reaches 0:
 - Combat ends immediately
 - Death/respawn rules apply (see `docs/01_architecture/ship_system.md` Section 8)
 
-## 4.6 Subsystem Failures (Phase 2)
+## 4.8 Subsystem Failures (Phase 2)
 
 Phase 2 may introduce subsystem damage:
 
