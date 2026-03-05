@@ -51,6 +51,18 @@ target lock
 * missile_range
 * guidance_accuracy
 * warhead_damage
+* missile_capacity (per ship — see `docs/01_architecture/ship_system.md` Section 4)
+
+Missile capacity is the maximum number of missiles a ship can carry. It is defined per ship class in `config/ships/ship_classes.json` as `missile_capacity`. Current values:
+
+| Class     | Missile Capacity |
+| --------- | ---------------- |
+| Courier   | 4                |
+| Scout     | 4                |
+| Freighter | 2                |
+| Fighter   | 12               |
+
+Missiles are purchased at ports and consume a slot from the ship's magazine. Fired missiles are expended and must be restocked at port.
 
 ---
 

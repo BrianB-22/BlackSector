@@ -59,19 +59,19 @@ Ship classes are defined in `config/ships/ship_classes.json`. They are loaded at
 
 ## 4.1 Phase 1 Classes
 
-| Class     | Hull | Shield | Energy | Cargo | Upgrade Slots | Weapon Slots | Drone Bays | Base Price | Speed  |
-| --------- | ---- | ------ | ------ | ----- | ------------- | ------------ | ---------- | ---------- | ------ |
-| Courier   | 100  | 50     | 100    | 20    | 3             | 1            | 4          | 8,000 cr   | Medium |
+| Class     | Hull | Shield | Energy | Cargo | Upgrade Slots | Weapon Slots | Missile Cap | Drone Bays | Base Price | Speed  |
+| --------- | ---- | ------ | ------ | ----- | ------------- | ------------ | ----------- | ---------- | ---------- | ------ |
+| Courier   | 100  | 50     | 100    | 20    | 3             | 1            | 4           | 4          | 8,000 cr   | Medium |
 
 Phase 1 ships only courier class. Additional classes are Phase 2.
 
 ## 4.2 Phase 2 Classes
 
-| Class     | Hull | Shield | Energy | Cargo | Upgrade Slots | Weapon Slots | Drone Bays | Base Price | Speed  |
-| --------- | ---- | ------ | ------ | ----- | ------------- | ------------ | ---------- | ---------- | ------ |
-| Scout     | 60   | 40     | 130    | 8     | 4             | 1            | 2          | 12,000 cr  | Fast   |
-| Freighter | 80   | 30     | 70     | 60    | 3             | 1            | 8          | 18,000 cr  | Slow   |
-| Fighter   | 130  | 90     | 160    | 6     | 4             | 3            | 4          | 22,000 cr  | Fast   |
+| Class     | Hull | Shield | Energy | Cargo | Upgrade Slots | Weapon Slots | Missile Cap | Drone Bays | Base Price | Speed  |
+| --------- | ---- | ------ | ------ | ----- | ------------- | ------------ | ----------- | ---------- | ---------- | ------ |
+| Scout     | 60   | 40     | 130    | 8     | 4             | 1            | 4           | 2          | 12,000 cr  | Fast   |
+| Freighter | 80   | 30     | 70     | 60    | 3             | 1            | 2           | 8          | 18,000 cr  | Slow   |
+| Fighter   | 130  | 90     | 160    | 6     | 4             | 3            | 12          | 4          | 22,000 cr  | Fast   |
 
 Class notes:
 * **Scout**: Best sensors, suited for exploration and mapping. Light armament.
@@ -101,6 +101,7 @@ Class notes:
       },
       "upgrade_slots": 3,
       "weapon_slots": 1,
+      "missile_capacity": 4,
       "drone_bay_capacity": 4,
       "base_price": 8000,
       "speed_class": "medium",
@@ -120,6 +121,7 @@ Class notes:
       },
       "upgrade_slots": 4,
       "weapon_slots": 1,
+      "missile_capacity": 4,
       "drone_bay_capacity": 2,
       "base_price": 12000,
       "speed_class": "fast",
@@ -139,6 +141,7 @@ Class notes:
       },
       "upgrade_slots": 3,
       "weapon_slots": 1,
+      "missile_capacity": 2,
       "drone_bay_capacity": 8,
       "base_price": 18000,
       "speed_class": "slow",
@@ -158,6 +161,7 @@ Class notes:
       },
       "upgrade_slots": 4,
       "weapon_slots": 3,
+      "missile_capacity": 12,
       "drone_bay_capacity": 4,
       "base_price": 22000,
       "speed_class": "fast",
