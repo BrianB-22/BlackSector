@@ -54,6 +54,7 @@ CREATE TABLE players (
   player_id         TEXT PRIMARY KEY,
   player_name       TEXT NOT NULL UNIQUE,
   token_hash        TEXT NOT NULL,
+  credits           INTEGER NOT NULL DEFAULT 0,
   created_at        INTEGER NOT NULL,
   last_login_at     INTEGER,
   is_banned         INTEGER NOT NULL DEFAULT 0
@@ -119,6 +120,21 @@ CREATE TABLE ship_cargo (
   commodity_id   TEXT NOT NULL REFERENCES commodities(commodity_id),
   quantity       INTEGER NOT NULL,
   PRIMARY KEY (ship_id, slot_index)
+);
+```
+
+---
+
+## Table: ship_drone_inventory
+
+Tracks undeployed drones stored in ship cargo. Drones are not commodities and are tracked separately.
+
+```sql
+CREATE TABLE ship_drone_inventory (
+  ship_id      TEXT NOT NULL REFERENCES ships(ship_id),
+  drone_type   TEXT NOT NULL,   -- mapping | prospecting | decoy | relay
+  quantity     INTEGER NOT NULL DEFAULT 0,
+  PRIMARY KEY (ship_id, drone_type)
 );
 ```
 
