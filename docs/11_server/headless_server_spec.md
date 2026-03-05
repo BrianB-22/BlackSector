@@ -295,7 +295,48 @@ Key configuration fields:
 
 ---
 
-# 15. Non-Goals (v1)
+# 15. PRNG Seeding and Determinism
+
+The simulation uses two distinct PRNG contexts:
+
+## 15.1 Universe Generation PRNG
+
+Used during world generation only (procedural placement of systems, ports, resources, security ratings).
+
+```
+seed = universe_seed (integer from server.json "universe_seed" field)
+rng  = rand.New(rand.NewSource(seed))
+```
+
+All procedural generation runs in deterministic order from this seed. Given the same `universe_seed`, the generated universe is always identical.
+
+## 15.2 Tick PRNG
+
+Used during simulation for per-tick randomness (pirate spawn checks, hazard rolls, mining yields, combat variance).
+
+```
+tick_seed = universe_seed XOR (uint64(tick_number) << 32)
+rng       = rand.New(rand.NewSource(int64(tick_seed)))
+```
+
+A new PRNG is constructed fresh each tick from this seed. This ensures:
+- Deterministic results for any given tick number
+- Results differ between ticks without global mutable state
+- Replay is possible: re-run from tick N with same seed to reproduce tick N outcomes
+
+**Important:** Do not use a single shared global `rand` — use `rand.New(rand.NewSource(...))` explicitly. The global `rand` is not seeded deterministically and is not safe for concurrent use.
+
+## 15.3 server.json universe_seed field
+
+```json
+"universe_seed": 42
+```
+
+This value seeds both universe generation and all tick randomness. Changing it produces a different universe and different simulation outcomes.
+
+---
+
+# 16. Non-Goals (v1)
 
 * Multi-process or distributed architecture
 * In-process hot reload of world structure

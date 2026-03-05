@@ -112,7 +112,53 @@ Commodity removed from a port during each economic tick.
 
 ---
 
-# 5. Data Model
+# 5. Port Types and Services
+
+## 5.1 Port Types
+
+There are four port types. Type is set in world config and stored in the `ports` table as `port_type`.
+
+| Type           | Description                                                     |
+| -------------- | --------------------------------------------------------------- |
+| `trading`      | Commerce hub. Full commodity market, bank, general services.    |
+| `mining`       | Resource extraction base. Buys raw materials, sells equipment.  |
+| `refueling`    | Waypoint station. Fuel and basic repairs only.                  |
+| `black_market` | Off-the-books port. Contraband, no bank, no law enforcement.    |
+
+The Federated Space origin starbase is a special `trading` port with all services enabled and a shipyard.
+
+## 5.2 Services Matrix
+
+✅ = available  ·  🔶 = Phase 2  ·  ❌ = not available
+
+| Service                | trading | mining | refueling | black_market |
+| ---------------------- | ------- | ------ | --------- | ------------ |
+| Commodity buy/sell     | ✅      | ✅     | ❌        | ✅ (contraband only in Black Sector) |
+| Ship repair (hull)     | ✅      | ✅     | ✅        | ✅           |
+| Fuel / energy restock  | ✅      | ✅     | ✅        | ✅           |
+| Missile resupply       | ✅      | ❌     | ✅        | ✅           |
+| Shipyard (buy ship)    | ✅ (origin only in Phase 1) | ❌ | ❌ | ❌ |
+| Upgrade market         | 🔶      | ❌     | ❌        | 🔶           |
+| Drone market           | 🔶      | 🔶     | ❌        | 🔶           |
+| Bank                   | ✅      | ✅     | ❌        | ❌           |
+
+## 5.3 Port Services Flags
+
+Each port has boolean flags set in world config (stored on `ports` table):
+
+```
+has_bank                — bank deposit/withdraw/transfer
+has_shipyard            — ship purchase
+has_upgrade_market      — upgrade purchase/removal (Phase 2)
+has_drone_market        — drone purchase (Phase 2)
+has_missile_supply      — missile restock
+has_repair              — hull repair
+has_fuel                — energy restock
+```
+
+All ports default to `has_repair = true` and `has_fuel = true`. Other services default to `false`.
+
+---
 
 ## Entity: Port (Persistent)
 

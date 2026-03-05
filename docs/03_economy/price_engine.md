@@ -6,7 +6,13 @@
 
 ## Owner: Economy Systems
 
+## Phase: **2** (not implemented in Phase 1)
+
 ## Last Updated: 2026-03-03
+
+---
+
+> **Phase 1 Note:** Phase 1 uses static commodity prices defined in `docs/15_roadmap/phase_1_vertical_slice.md` Section 5. This price engine (dynamic pricing) is a Phase 2 feature. Do not implement during Phase 1 development.
 
 ---
 

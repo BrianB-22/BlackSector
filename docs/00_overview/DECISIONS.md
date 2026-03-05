@@ -103,20 +103,23 @@ Every entry must include: the decision, the reasoning, and the alternatives cons
 
 ---
 
-## D-005 — No Safe Zones (v1)
+## D-005 — No Safe Zones (v1) — Amended for Federated Space
 **Date:** 2026-03-02
-**Status:** Accepted
+**Status:** Accepted (amended 2026-03-05)
 
-**Decision:** High-security systems significantly reduce risk but do not eliminate it. No region provides mechanical immunity from attack or loss.
+**Decision:** High-security systems significantly reduce risk but do not eliminate it. With one explicit exception, no region provides mechanical immunity from attack or loss.
+
+**Exception — Federated Space:** PvP combat between players is server-side disabled in Federated Space. This is a deliberate new-player onboarding protection. NPC pirates are also absent. Federated Space is not a loophole for farming — mining yields are intentionally very low and it is not a viable long-term play zone.
 
 **Reasoning:**
-- Persistent stakes require that loss always be possible.
-- Safe zones create gameplay gravity that pulls players away from risk-reward content.
-- The risk gradient only has meaning if both ends are real.
+- Persistent stakes require that loss always be possible — everywhere except Federated Space.
+- Safe zones create gameplay gravity that pulls players away from risk-reward content. Federated Space is the exception that proves the rule: it exists to get players started, not to shelter them indefinitely.
+- The risk gradient only has meaning if both ends are real. Federated Space is the floor of the gradient, not a bypass.
 
 **Alternatives Considered:**
-- Designated newbie-protected zones (deferred: may revisit with onboarding design, but mechanical immunity is rejected)
-- Station docking as safe state (partial: docked ships are harder targets, but not immune)
+- No safe zone at all (rejected: new players with no ship and no knowledge need a protected start)
+- Station docking as safe state (partial: docked ships are harder targets, but not immune outside Federated Space)
+- Mechanical immunity in all High Security systems (rejected: dilutes the risk gradient)
 
 ---
 

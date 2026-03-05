@@ -105,6 +105,7 @@ Features not included in Phase 1 are deferred to Phase 2, not because they are u
 | GUI client (port 2223)     | Phase 2+      |
 | Faction systems            | Out of scope  |
 | Fleet combat               | Out of scope  |
+| Player-to-player cargo trading | Out of scope — players cannot trade items directly with each other. Credits can be sent via `bank send`. Cargo cannot. |
 
 ---
 
@@ -121,6 +122,38 @@ Features not included in Phase 1 are deferred to Phase 2, not because they are u
 | luxury_goods   | Luxury Goods   | luxury     | 1500       |
 
 Prices are static in Phase 1. Each port carries a subset of these commodities.
+
+## 5.1 Port Commodity Assignment (Phase 1)
+
+Port commodity stock is defined in world config. The following table defines what each **port type** produces (sells to players) and consumes (buys from players) by default:
+
+| Port Type   | Produces (sells)                          | Consumes (buys)                    |
+| ----------- | ----------------------------------------- | ---------------------------------- |
+| `trading`   | food_supplies, luxury_goods, electronics  | raw_ore, refined_ore, machinery    |
+| `mining`    | raw_ore, fuel_cells                       | food_supplies, machinery           |
+| `refueling` | fuel_cells, food_supplies                 | (none — not a trade hub)           |
+
+Specific ports may deviate from these defaults in world config. The defaults establish a natural trade loop:
+- Players haul raw materials from mining ports to trading ports
+- Players haul manufactured goods back to mining ports
+
+The Federated Space origin starbase carries all 7 commodities at base price as a reference market.
+
+## 5.2 Static Price Table
+
+Prices do not change in Phase 1. The base prices from Section 5 apply uniformly at all ports:
+
+| Commodity      | Base Price | Buy Price (port sells) | Sell Price (port buys) |
+| -------------- | ---------- | ---------------------- | ---------------------- |
+| food_supplies  | 100        | 110                    | 90                     |
+| fuel_cells     | 150        | 165                    | 135                    |
+| raw_ore        | 80         | 88                     | 72                     |
+| refined_ore    | 240        | 264                    | 216                    |
+| machinery      | 600        | 660                    | 540                    |
+| electronics    | 800        | 880                    | 720                    |
+| luxury_goods   | 1500       | 1650                   | 1350                   |
+
+Buy/sell spread is 10% above/below base price (configurable per port type in world config). This is the profit margin for trade runs.
 
 ---
 

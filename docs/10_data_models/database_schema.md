@@ -133,6 +133,7 @@ CREATE TABLE ships (
   energy_points       INTEGER NOT NULL,
   max_energy_points   INTEGER NOT NULL,
   cargo_capacity      INTEGER NOT NULL,
+  missiles_current    INTEGER NOT NULL DEFAULT 0,
   current_system_id   INTEGER REFERENCES systems(system_id),
   position_x          REAL NOT NULL DEFAULT 0.0,
   position_y          REAL NOT NULL DEFAULT 0.0,
@@ -187,6 +188,8 @@ CREATE TABLE ship_upgrades (
   PRIMARY KEY (ship_id, upgrade_id)
 );
 ```
+
+Slot limit enforcement is **application-layer only** — the DB does not track slot index or enforce capacity. Before installing an upgrade, the server must check: `COUNT(*) WHERE ship_id = ?` < `ship_class.upgrade_slots` (from config). The `max_per_ship` constraint per upgrade (e.g., `cargo_expander` max 3) is also enforced at the application layer.
 
 ---
 
@@ -271,7 +274,13 @@ CREATE TABLE ports (
   security_level REAL NOT NULL,
   docking_fee             INTEGER NOT NULL DEFAULT 0,
   has_bank                INTEGER NOT NULL DEFAULT 0,
-  interest_rate_percent   REAL NOT NULL DEFAULT 0.0
+  interest_rate_percent   REAL NOT NULL DEFAULT 0.0,
+  has_shipyard            INTEGER NOT NULL DEFAULT 0,
+  has_upgrade_market      INTEGER NOT NULL DEFAULT 0,
+  has_drone_market        INTEGER NOT NULL DEFAULT 0,
+  has_missile_supply      INTEGER NOT NULL DEFAULT 0,
+  has_repair              INTEGER NOT NULL DEFAULT 1,
+  has_fuel                INTEGER NOT NULL DEFAULT 1
 );
 ```
 

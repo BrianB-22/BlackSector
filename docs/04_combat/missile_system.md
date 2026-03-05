@@ -64,6 +64,32 @@ Missile capacity is the maximum number of missiles a ship can carry. It is defin
 
 Missiles are purchased at ports and consume a slot from the ship's magazine. Fired missiles are expended and must be restocked at port.
 
+## 4.2 Missile Storage
+
+Current missile count is stored on the `ships` table as `missiles_current`. Maximum capacity is `missile_capacity` from the ship class config.
+
+`missiles_current` is decremented by 1 each time a missile is fired. It cannot go below 0.
+
+## 4.3 Restock Command
+
+Missiles are restocked at ports where `has_missile_supply = true` (trading ports and refueling ports). Must be docked.
+
+```
+missiles                    — show current missile count and capacity
+missiles buy <n>            — purchase n missiles (cost: missile_unit_price × n)
+missiles buy all            — fill to capacity
+```
+
+Missile unit price is configured in `server.json`:
+
+```json
+"combat": {
+  "missile_unit_price": 200
+}
+```
+
+Restock fails if the port has no missile supply or if `missiles_current` is already at capacity.
+
 ---
 
 # 5. Counterplay
