@@ -511,100 +511,17 @@ Signal detection range:
 
 # 16. Data Model
 
-## Table: messages
+The canonical schema for all communications and drone tables is in `docs/10_data_models/database_schema.md`. That file is the source of truth. If this document and the schema file ever conflict, the schema file wins.
 
-```sql
-CREATE TABLE messages (
-  message_id       TEXT PRIMARY KEY,     -- UUID
-  message_type     TEXT NOT NULL,        -- proximity | system | irn_direct | irn_broadcast | distress | dead_drop
-  sender_id        TEXT NOT NULL,        -- FK: players.player_id
-  sender_name      TEXT NOT NULL,        -- denormalized for display after deletion
-  recipient_id     TEXT,                 -- FK: players.player_id (null for broadcasts)
-  origin_system_id INTEGER NOT NULL,     -- FK: systems.system_id
-  origin_position_x REAL,
-  origin_position_y REAL,
-  content          TEXT NOT NULL,        -- max 500 characters
-  sent_tick        INTEGER NOT NULL,
-  deliver_at_tick  INTEGER NOT NULL,     -- for IRN delay simulation
-  delivered        INTEGER NOT NULL DEFAULT 0,
-  read_at_tick     INTEGER,
-  expires_at_tick  INTEGER NOT NULL,
-  dead_drop_port_id INTEGER,             -- FK: ports.port_id (dead drop only)
-  intercepted_by   TEXT                 -- FK: players.player_id (null if not intercepted)
-);
+Tables defined there that belong to this system:
 
-CREATE INDEX idx_messages_recipient ON messages (recipient_id, delivered, read_at_tick);
-CREATE INDEX idx_messages_deliver   ON messages (deliver_at_tick, delivered);
-CREATE INDEX idx_messages_dead_drop ON messages (dead_drop_port_id, recipient_id);
-```
-
-## Table: drones
-
-```sql
-CREATE TABLE drones (
-  drone_id          TEXT PRIMARY KEY,     -- UUID
-  drone_name        TEXT NOT NULL,
-  drone_type        TEXT NOT NULL,        -- mapping | prospecting | decoy | relay
-  owner_id          TEXT NOT NULL,        -- FK: players.player_id
-  current_system_id INTEGER NOT NULL,     -- FK: systems.system_id
-  position_x        REAL NOT NULL,
-  position_y        REAL NOT NULL,
-  hull_points       INTEGER NOT NULL,
-  max_hull_points   INTEGER NOT NULL,
-  energy_points     INTEGER NOT NULL,
-  max_energy_points INTEGER NOT NULL,
-  cargo_current     INTEGER NOT NULL DEFAULT 0,
-  cargo_capacity    INTEGER NOT NULL DEFAULT 0,
-  status            TEXT NOT NULL,        -- active | standby | returning | destroyed
-  deployed_at_tick  INTEGER NOT NULL,
-  last_command_tick INTEGER,
-  last_report_tick  INTEGER
-);
-
-CREATE INDEX idx_drones_owner  ON drones (owner_id, status);
-CREATE INDEX idx_drones_system ON drones (current_system_id);
-```
-
-## Table: drone_commands
-
-```sql
-CREATE TABLE drone_commands (
-  command_id        TEXT PRIMARY KEY,     -- UUID
-  drone_id          TEXT NOT NULL,        -- FK: drones.drone_id
-  owner_id          TEXT NOT NULL,        -- FK: players.player_id
-  command_type      TEXT NOT NULL,        -- move | scan | mine | mine_stop | report | return | standby | recall
-  parameters        TEXT,                 -- JSON (e.g. target coordinates)
-  issued_tick       INTEGER NOT NULL,
-  deliver_at_tick   INTEGER NOT NULL,     -- IRN delay applied at issue time
-  delivered         INTEGER NOT NULL DEFAULT 0,
-  executed          INTEGER NOT NULL DEFAULT 0,
-  origin_system_id  INTEGER NOT NULL,
-  exposure_applied  INTEGER NOT NULL DEFAULT 0,
-  intercepted_by    TEXT                  -- FK: players.player_id
-);
-
-CREATE INDEX idx_drone_commands_deliver ON drone_commands (deliver_at_tick, delivered);
-CREATE INDEX idx_drone_commands_drone   ON drone_commands (drone_id, executed);
-```
-
-## Table: drone_telemetry
-
-```sql
-CREATE TABLE drone_telemetry (
-  report_id         TEXT PRIMARY KEY,     -- UUID
-  drone_id          TEXT NOT NULL,        -- FK: drones.drone_id
-  owner_id          TEXT NOT NULL,        -- FK: players.player_id
-  report_type       TEXT NOT NULL,        -- status | scan_result | mining_yield | alert | destroyed
-  payload           TEXT NOT NULL,        -- JSON report data
-  generated_tick    INTEGER NOT NULL,
-  deliver_at_tick   INTEGER NOT NULL,     -- IRN delay from drone's location
-  delivered         INTEGER NOT NULL DEFAULT 0,
-  origin_system_id  INTEGER NOT NULL      -- drone's system at time of report
-);
-
-CREATE INDEX idx_drone_telemetry_deliver ON drone_telemetry (deliver_at_tick, delivered);
-CREATE INDEX idx_drone_telemetry_owner   ON drone_telemetry (owner_id, delivered);
-```
+| Table                  | Schema Section | Purpose                                      |
+| ---------------------- | -------------- | -------------------------------------------- |
+| `messages`             | Section 14     | All player-to-player messages, IRN delivery  |
+| `drones`               | Section 14     | Deployed drone state                         |
+| `drone_commands`       | Section 14     | Queued commands with IRN delay               |
+| `drone_telemetry`      | Section 14     | Drone reports delivered back to owner        |
+| `ship_drone_inventory` | Section 5      | Undeployed drones in ship bays               |
 
 ---
 

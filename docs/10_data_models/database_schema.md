@@ -162,7 +162,9 @@ CREATE TABLE ship_cargo (
 
 ## Table: ship_drone_inventory
 
-Tracks undeployed drones stored in ship cargo. Drones are not commodities and are tracked separately.
+Tracks undeployed drones in a ship's drone bays. Drones are not commodities and are not stored in `ship_cargo`.
+
+Bay capacity is defined per ship class in `config/ships/ship_classes.json` (`drone_bay_capacity`). Total bay usage = `SUM(ship_drone_inventory.quantity)` + active deployed drone count (`drones` table WHERE `owner_id` matches AND `status != 'destroyed'`). This sum must not exceed `drone_bay_capacity`. Enforced at application layer.
 
 ```sql
 CREATE TABLE ship_drone_inventory (

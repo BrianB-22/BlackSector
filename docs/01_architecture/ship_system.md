@@ -59,19 +59,19 @@ Ship classes are defined in `config/ships/ship_classes.json`. They are loaded at
 
 ## 4.1 Phase 1 Classes
 
-| Class     | Hull | Shield | Energy | Cargo | Upgrade Slots | Weapon Slots | Base Price | Speed  |
-| --------- | ---- | ------ | ------ | ----- | ------------- | ------------ | ---------- | ------ |
-| Courier   | 100  | 50     | 100    | 20    | 3             | 1            | 8,000 cr   | Medium |
+| Class     | Hull | Shield | Energy | Cargo | Upgrade Slots | Weapon Slots | Drone Bays | Base Price | Speed  |
+| --------- | ---- | ------ | ------ | ----- | ------------- | ------------ | ---------- | ---------- | ------ |
+| Courier   | 100  | 50     | 100    | 20    | 3             | 1            | 4          | 8,000 cr   | Medium |
 
 Phase 1 ships only courier class. Additional classes are Phase 2.
 
 ## 4.2 Phase 2 Classes
 
-| Class     | Hull | Shield | Energy | Cargo | Upgrade Slots | Weapon Slots | Base Price | Speed  |
-| --------- | ---- | ------ | ------ | ----- | ------------- | ------------ | ---------- | ------ |
-| Scout     | 60   | 40     | 130    | 8     | 4             | 1            | 12,000 cr  | Fast   |
-| Freighter | 80   | 30     | 70     | 60    | 3             | 1            | 18,000 cr  | Slow   |
-| Fighter   | 130  | 90     | 160    | 6     | 4             | 3            | 22,000 cr  | Fast   |
+| Class     | Hull | Shield | Energy | Cargo | Upgrade Slots | Weapon Slots | Drone Bays | Base Price | Speed  |
+| --------- | ---- | ------ | ------ | ----- | ------------- | ------------ | ---------- | ---------- | ------ |
+| Scout     | 60   | 40     | 130    | 8     | 4             | 1            | 2          | 12,000 cr  | Fast   |
+| Freighter | 80   | 30     | 70     | 60    | 3             | 1            | 8          | 18,000 cr  | Slow   |
+| Fighter   | 130  | 90     | 160    | 6     | 4             | 3            | 4          | 22,000 cr  | Fast   |
 
 Class notes:
 * **Scout**: Best sensors, suited for exploration and mapping. Light armament.
@@ -101,6 +101,7 @@ Class notes:
       },
       "upgrade_slots": 3,
       "weapon_slots": 1,
+      "drone_bay_capacity": 4,
       "base_price": 8000,
       "speed_class": "medium",
       "available_in_federated_space": true
@@ -119,6 +120,7 @@ Class notes:
       },
       "upgrade_slots": 4,
       "weapon_slots": 1,
+      "drone_bay_capacity": 2,
       "base_price": 12000,
       "speed_class": "fast",
       "available_in_federated_space": true
@@ -137,6 +139,7 @@ Class notes:
       },
       "upgrade_slots": 3,
       "weapon_slots": 1,
+      "drone_bay_capacity": 8,
       "base_price": 18000,
       "speed_class": "slow",
       "available_in_federated_space": true
@@ -155,6 +158,7 @@ Class notes:
       },
       "upgrade_slots": 4,
       "weapon_slots": 3,
+      "drone_bay_capacity": 4,
       "base_price": 22000,
       "speed_class": "fast",
       "available_in_federated_space": true
@@ -488,9 +492,22 @@ Add `credits` column:
 ALTER TABLE players ADD COLUMN credits INTEGER NOT NULL DEFAULT 0;
 ```
 
-## 9.2 ship_drone_inventory table
+## 9.2 Drone Bays
 
-Drones stored as undeployed cargo on a ship are tracked in a separate table (not in `ship_cargo`, which is for commodities only):
+Drones are stored in **drone bays** — dedicated slots separate from cargo. They are not commodities and are not stored in `ship_cargo`.
+
+Bay capacity is fixed per ship class (from `drone_bay_capacity` in config):
+
+| Class     | Drone Bays |
+| --------- | ---------- |
+| Scout     | 2          |
+| Courier   | 4          |
+| Fighter   | 4          |
+| Freighter | 8          |
+
+**Bay usage rule:** total drones occupying bays = undeployed drones (`ship_drone_inventory`) + deployed drones (`drones` table, status != `destroyed`). This sum must not exceed `drone_bay_capacity`. Enforced at the application layer.
+
+Undeployed drones are tracked in `ship_drone_inventory` (see `database_schema.md` Section 5):
 
 ```sql
 CREATE TABLE ship_drone_inventory (
@@ -501,7 +518,7 @@ CREATE TABLE ship_drone_inventory (
 );
 ```
 
-When a drone is deployed, a row is removed from this table and a `drones` record is created. When recalled (drone docks at port), the reverse occurs.
+When a drone is deployed, its `ship_drone_inventory` quantity is decremented and a `drones` record is created. When recalled to a port, the reverse occurs — bay slot freed or re-occupied.
 
 ---
 
