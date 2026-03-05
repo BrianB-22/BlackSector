@@ -19,7 +19,7 @@
           "parameters": {
             "commodity_id": "food_supplies",
             "quantity": 15,
-            "port_id": "WORLD_CONFIG_PORT_ID"
+            "port_id": "helios_reach_extraction"
           },
           "failure_condition": null
         }
@@ -47,7 +47,7 @@
           "parameters": {
             "commodity_id": "raw_ore",
             "quantity": 20,
-            "port_id": "WORLD_CONFIG_PORT_ID"
+            "port_id": "vega_prime_exchange"
           },
           "failure_condition": null
         }
@@ -75,7 +75,7 @@
           "parameters": {
             "commodity_id": "fuel_cells",
             "quantity": 10,
-            "port_id": "WORLD_CONFIG_PORT_ID"
+            "port_id": "outpost_9_fuel"
           },
           "failure_condition": null
         }
@@ -103,7 +103,7 @@
           "parameters": {
             "commodity_id": "electronics",
             "quantity": 5,
-            "port_id": "WORLD_CONFIG_PORT_ID"
+            "port_id": "callisto_extraction_base"
           },
           "failure_condition": null
         }
@@ -131,7 +131,7 @@
           "parameters": {
             "commodity_id": "luxury_goods",
             "quantity": 3,
-            "port_id": "WORLD_CONFIG_PORT_ID"
+            "port_id": "terminus_market"
           },
           "failure_condition": null
         }

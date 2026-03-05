@@ -1,0 +1,49 @@
+{
+  "server": {
+    "ssh_port": 2222,
+    "tick_interval_ms": 2000,
+    "snapshot_interval_ticks": 100,
+    "max_concurrent_players": 50,
+    "db_path": "blacksector.db",
+    "world_config_path": "config/world/alpha_sector.json",
+    "missions_config_dir": "config/missions/"
+  },
+  "logging": {
+    "level": "info",
+    "log_file": "server.log",
+    "debug_log_enabled": false,
+    "debug_log_path": "debug.log",
+    "debug_log_include_sql": false,
+    "debug_log_include_tick_detail": true
+  },
+  "universe": {
+    "universe_seed": 1701,
+    "pirate_spawn_interval_ticks": 10,
+    "pirate_activity_base": 0.30,
+    "surrender_loss_percent": 40
+  },
+  "combat": {
+    "courier_accuracy": 0.65,
+    "shield_regen_per_tick": 5,
+    "hull_repair_cost_per_point": 10,
+    "flee_base_chance": 0.35,
+    "flee_energy_bonus": 0.25,
+    "missile_unit_price": 200
+  },
+  "economy": {
+    "low_sec_price_multiplier": 1.18
+  },
+  "banking": {
+    "interest_apply_interval_ticks": 500
+  },
+  "player": {
+    "starting_credits": 1000,
+    "starting_ship_class": "courier",
+    "starting_system_id": "nexus_prime"
+  },
+  "irn": {
+    "base_delay_ticks": 5,
+    "max_delay_ticks": 20,
+    "broadcast_rate_limit_per_hour": 2
+  }
+}

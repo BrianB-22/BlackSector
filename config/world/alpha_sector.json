@@ -1,0 +1,737 @@
+{
+  "_schema_version": "1.0",
+  "_note": "Phase 1 world. 18 systems: 2 Federated, 8 High Security, 8 Low Security. See docs/16_world_config/world_config_schema.md.",
+  "world": {
+    "name": "Alpha Sector",
+    "description": "The frontier region of the New Meridian Federation. Safe ports cluster near the core; danger and profit increase toward the outer drift.",
+    "seed": 1701
+  },
+  "commodities": [
+    { "commodity_id": "food_supplies",  "name": "Food Supplies",  "category": "essential",   "base_price": 100,  "unit": "crate" },
+    { "commodity_id": "fuel_cells",     "name": "Fuel Cells",     "category": "essential",   "base_price": 150,  "unit": "cell" },
+    { "commodity_id": "raw_ore",        "name": "Raw Ore",        "category": "industrial",  "base_price": 80,   "unit": "ton" },
+    { "commodity_id": "refined_ore",    "name": "Refined Ore",    "category": "industrial",  "base_price": 240,  "unit": "ton" },
+    { "commodity_id": "machinery",      "name": "Machinery",      "category": "industrial",  "base_price": 600,  "unit": "unit" },
+    { "commodity_id": "electronics",    "name": "Electronics",    "category": "industrial",  "base_price": 800,  "unit": "unit" },
+    { "commodity_id": "luxury_goods",   "name": "Luxury Goods",   "category": "luxury",      "base_price": 1500, "unit": "crate" }
+  ],
+  "systems": [
+    {
+      "system_id": "nexus_prime",
+      "name": "Nexus Prime",
+      "description": "The central hub of the New Meridian Federation. All new pilots begin their careers here.",
+      "security_rating": 2.0,
+      "security_zone": "federated",
+      "x": 0, "y": 0
+    },
+    {
+      "system_id": "gateway_station",
+      "name": "Gateway Station",
+      "description": "The transit hub connecting Federation core to the wider sector.",
+      "security_rating": 2.0,
+      "security_zone": "federated",
+      "x": 2, "y": 1
+    },
+    {
+      "system_id": "new_haven",
+      "name": "New Haven",
+      "description": "A prosperous trading hub close to Federation space. Popular with new traders.",
+      "security_rating": 0.8,
+      "security_zone": "high",
+      "x": -2, "y": 3
+    },
+    {
+      "system_id": "vega_prime",
+      "name": "Vega Prime",
+      "description": "The largest market in the sector. Multiple trading houses compete for business.",
+      "security_rating": 0.8,
+      "security_zone": "high",
+      "x": 4, "y": 4
+    },
+    {
+      "system_id": "helios_reach",
+      "name": "Helios Reach",
+      "description": "Rich ore deposits draw mining operations from across the sector.",
+      "security_rating": 0.8,
+      "security_zone": "high",
+      "x": -3, "y": 6
+    },
+    {
+      "system_id": "aurora_station",
+      "name": "Aurora Station",
+      "description": "A dedicated refueling depot on the main transit corridor.",
+      "security_rating": 0.8,
+      "security_zone": "high",
+      "x": -1, "y": 8
+    },
+    {
+      "system_id": "meridian",
+      "name": "Meridian",
+      "description": "A well-established trading port on the eastern corridor.",
+      "security_rating": 0.8,
+      "security_zone": "high",
+      "x": 5, "y": 2
+    },
+    {
+      "system_id": "callisto_depot",
+      "name": "Callisto Depot",
+      "description": "Heavy industrial mining operations supply ore to the wider sector.",
+      "security_rating": 0.8,
+      "security_zone": "high",
+      "x": 6, "y": 6
+    },
+    {
+      "system_id": "iron_cross",
+      "name": "Iron Cross",
+      "description": "Named for the unusual iron-rich asteroid formation at its center.",
+      "security_rating": 0.7,
+      "security_zone": "high",
+      "x": 7, "y": 3
+    },
+    {
+      "system_id": "harbor_point",
+      "name": "Harbor Point",
+      "description": "A well-positioned trading and refueling hub on the southern route.",
+      "security_rating": 0.7,
+      "security_zone": "high",
+      "x": 4, "y": -2
+    },
+    {
+      "system_id": "deadrock",
+      "name": "Deadrock",
+      "description": "A brutal mining colony in low security space. High yields, high risk.",
+      "security_rating": 0.15,
+      "security_zone": "low",
+      "x": -4, "y": 9
+    },
+    {
+      "system_id": "the_narrows",
+      "name": "The Narrows",
+      "description": "A dangerous transit corridor. Pirates use it as a staging ground.",
+      "security_rating": 0.15,
+      "security_zone": "low",
+      "x": 3, "y": 7
+    },
+    {
+      "system_id": "rust_belt",
+      "name": "Rust Belt",
+      "description": "An aging mining district. Ore quality is inconsistent but prices are good.",
+      "security_rating": 0.15,
+      "security_zone": "low",
+      "x": -5, "y": 8
+    },
+    {
+      "system_id": "outpost_9",
+      "name": "Outpost 9",
+      "description": "A bare-bones refueling post. No questions asked.",
+      "security_rating": 0.15,
+      "security_zone": "low",
+      "x": 1, "y": 11
+    },
+    {
+      "system_id": "void_anchor",
+      "name": "Void Anchor",
+      "description": "A trading post that sources goods from... unclear origins.",
+      "security_rating": 0.15,
+      "security_zone": "low",
+      "x": 5, "y": 9
+    },
+    {
+      "system_id": "slag_heap",
+      "name": "Slag Heap",
+      "description": "Barely operational mining rigs scrape ore from exhausted deposits.",
+      "security_rating": 0.10,
+      "security_zone": "low",
+      "x": 8, "y": 5
+    },
+    {
+      "system_id": "far_drift",
+      "name": "Far Drift",
+      "description": "The edge of charted space. A refueling stop for the brave.",
+      "security_rating": 0.10,
+      "security_zone": "low",
+      "x": 2, "y": -6
+    },
+    {
+      "system_id": "terminus",
+      "name": "Terminus",
+      "description": "The most remote trading post in the sector. Prices reflect the isolation.",
+      "security_rating": 0.10,
+      "security_zone": "low",
+      "x": 9, "y": 10
+    }
+  ],
+  "jump_connections": [
+    { "from_system_id": "nexus_prime",    "to_system_id": "gateway_station", "fuel_cost": 5 },
+    { "from_system_id": "nexus_prime",    "to_system_id": "new_haven",        "fuel_cost": 8 },
+    { "from_system_id": "gateway_station","to_system_id": "vega_prime",       "fuel_cost": 10 },
+    { "from_system_id": "gateway_station","to_system_id": "meridian",         "fuel_cost": 8 },
+    { "from_system_id": "new_haven",      "to_system_id": "helios_reach",     "fuel_cost": 12 },
+    { "from_system_id": "new_haven",      "to_system_id": "aurora_station",   "fuel_cost": 15 },
+    { "from_system_id": "vega_prime",     "to_system_id": "callisto_depot",   "fuel_cost": 12 },
+    { "from_system_id": "vega_prime",     "to_system_id": "the_narrows",      "fuel_cost": 18 },
+    { "from_system_id": "meridian",       "to_system_id": "iron_cross",       "fuel_cost": 10 },
+    { "from_system_id": "meridian",       "to_system_id": "harbor_point",     "fuel_cost": 12 },
+    { "from_system_id": "helios_reach",   "to_system_id": "deadrock",         "fuel_cost": 15 },
+    { "from_system_id": "aurora_station", "to_system_id": "outpost_9",        "fuel_cost": 18 },
+    { "from_system_id": "callisto_depot", "to_system_id": "rust_belt",        "fuel_cost": 15 },
+    { "from_system_id": "iron_cross",     "to_system_id": "slag_heap",        "fuel_cost": 12 },
+    { "from_system_id": "harbor_point",   "to_system_id": "far_drift",        "fuel_cost": 20 },
+    { "from_system_id": "the_narrows",    "to_system_id": "void_anchor",      "fuel_cost": 12 },
+    { "from_system_id": "the_narrows",    "to_system_id": "outpost_9",        "fuel_cost": 15 },
+    { "from_system_id": "deadrock",       "to_system_id": "rust_belt",        "fuel_cost": 10 },
+    { "from_system_id": "rust_belt",      "to_system_id": "slag_heap",        "fuel_cost": 12 },
+    { "from_system_id": "outpost_9",      "to_system_id": "far_drift",        "fuel_cost": 18 },
+    { "from_system_id": "void_anchor",    "to_system_id": "terminus",         "fuel_cost": 15 },
+    { "from_system_id": "slag_heap",      "to_system_id": "terminus",         "fuel_cost": 12 },
+    { "from_system_id": "far_drift",      "to_system_id": "terminus",         "fuel_cost": 20 }
+  ],
+  "ports": [
+    {
+      "port_id": "nexus_prime_starbase",
+      "name": "Nexus Prime Starbase",
+      "system_id": "nexus_prime",
+      "port_type": "trading",
+      "description": "The origin station. New pilots receive their first ship and credits here. All commodities available at reference prices.",
+      "services": {
+        "has_bank": true,
+        "interest_rate_percent": 1.5,
+        "has_shipyard": false,
+        "has_upgrade_market": false,
+        "has_drone_market": false,
+        "has_missile_supply": false,
+        "has_repair": true,
+        "has_fuel": true
+      },
+      "commodities": {
+        "produces": ["food_supplies", "fuel_cells", "raw_ore", "refined_ore", "machinery", "electronics", "luxury_goods"],
+        "consumes": ["food_supplies", "fuel_cells", "raw_ore", "refined_ore", "machinery", "electronics", "luxury_goods"]
+      }
+    },
+    {
+      "port_id": "gateway_trading_post",
+      "name": "Gateway Trading Post",
+      "system_id": "gateway_station",
+      "port_type": "trading",
+      "description": "A busy trading hub at the junction of major shipping lanes.",
+      "services": {
+        "has_bank": true,
+        "interest_rate_percent": 2.0,
+        "has_shipyard": false,
+        "has_upgrade_market": false,
+        "has_drone_market": false,
+        "has_missile_supply": false,
+        "has_repair": true,
+        "has_fuel": true
+      },
+      "commodities": {
+        "produces": ["food_supplies", "luxury_goods", "electronics"],
+        "consumes": ["raw_ore", "refined_ore", "machinery"]
+      }
+    },
+    {
+      "port_id": "new_haven_market",
+      "name": "New Haven Central Market",
+      "system_id": "new_haven",
+      "port_type": "trading",
+      "description": "A well-stocked market catering to new traders building their first trade routes.",
+      "services": {
+        "has_bank": true,
+        "interest_rate_percent": 2.5,
+        "has_shipyard": false,
+        "has_upgrade_market": false,
+        "has_drone_market": false,
+        "has_missile_supply": false,
+        "has_repair": true,
+        "has_fuel": true
+      },
+      "commodities": {
+        "produces": ["food_supplies", "luxury_goods", "electronics"],
+        "consumes": ["raw_ore", "refined_ore", "machinery"]
+      }
+    },
+    {
+      "port_id": "new_haven_fuel_depot",
+      "name": "New Haven Fuel Depot",
+      "system_id": "new_haven",
+      "port_type": "refueling",
+      "description": "Quick fueling for pilots heading toward the frontier.",
+      "services": {
+        "has_bank": false,
+        "interest_rate_percent": 0.0,
+        "has_shipyard": false,
+        "has_upgrade_market": false,
+        "has_drone_market": false,
+        "has_missile_supply": false,
+        "has_repair": true,
+        "has_fuel": true
+      },
+      "commodities": {
+        "produces": ["fuel_cells", "food_supplies"],
+        "consumes": []
+      }
+    },
+    {
+      "port_id": "vega_prime_exchange",
+      "name": "Vega Prime Exchange",
+      "system_id": "vega_prime",
+      "port_type": "trading",
+      "description": "The largest commodities exchange in the sector. Best prices on manufactured goods.",
+      "services": {
+        "has_bank": true,
+        "interest_rate_percent": 3.0,
+        "has_shipyard": false,
+        "has_upgrade_market": false,
+        "has_drone_market": false,
+        "has_missile_supply": true,
+        "has_repair": true,
+        "has_fuel": true
+      },
+      "commodities": {
+        "produces": ["food_supplies", "luxury_goods", "electronics", "machinery"],
+        "consumes": ["raw_ore", "refined_ore"]
+      }
+    },
+    {
+      "port_id": "vega_prime_ore_depot",
+      "name": "Vega Prime Ore Depot",
+      "system_id": "vega_prime",
+      "port_type": "mining",
+      "description": "Processes and brokers ore shipments from mining operations across the sector.",
+      "services": {
+        "has_bank": false,
+        "interest_rate_percent": 0.0,
+        "has_shipyard": false,
+        "has_upgrade_market": false,
+        "has_drone_market": false,
+        "has_missile_supply": false,
+        "has_repair": true,
+        "has_fuel": true
+      },
+      "commodities": {
+        "produces": ["raw_ore", "fuel_cells"],
+        "consumes": ["food_supplies", "machinery"]
+      }
+    },
+    {
+      "port_id": "helios_reach_extraction",
+      "name": "Helios Reach Extraction Base",
+      "system_id": "helios_reach",
+      "port_type": "mining",
+      "description": "Primary extraction facility for the Helios ore fields.",
+      "services": {
+        "has_bank": true,
+        "interest_rate_percent": 3.0,
+        "has_shipyard": false,
+        "has_upgrade_market": false,
+        "has_drone_market": false,
+        "has_missile_supply": false,
+        "has_repair": true,
+        "has_fuel": true
+      },
+      "commodities": {
+        "produces": ["raw_ore", "fuel_cells"],
+        "consumes": ["food_supplies", "machinery"]
+      }
+    },
+    {
+      "port_id": "helios_reach_processing",
+      "name": "Helios Ore Processing",
+      "system_id": "helios_reach",
+      "port_type": "mining",
+      "description": "Secondary facility refining raw ore into higher-value refined ore.",
+      "services": {
+        "has_bank": false,
+        "interest_rate_percent": 0.0,
+        "has_shipyard": false,
+        "has_upgrade_market": false,
+        "has_drone_market": false,
+        "has_missile_supply": false,
+        "has_repair": true,
+        "has_fuel": false
+      },
+      "commodities": {
+        "produces": ["refined_ore", "raw_ore"],
+        "consumes": ["food_supplies", "electronics"]
+      }
+    },
+    {
+      "port_id": "aurora_fueling_station",
+      "name": "Aurora Fueling Station",
+      "system_id": "aurora_station",
+      "port_type": "refueling",
+      "description": "A critical refueling stop on the route toward the frontier.",
+      "services": {
+        "has_bank": false,
+        "interest_rate_percent": 0.0,
+        "has_shipyard": false,
+        "has_upgrade_market": false,
+        "has_drone_market": false,
+        "has_missile_supply": false,
+        "has_repair": true,
+        "has_fuel": true
+      },
+      "commodities": {
+        "produces": ["fuel_cells", "food_supplies"],
+        "consumes": []
+      }
+    },
+    {
+      "port_id": "meridian_central_market",
+      "name": "Meridian Central Market",
+      "system_id": "meridian",
+      "port_type": "trading",
+      "description": "A well-established trading hub serving the eastern corridor.",
+      "services": {
+        "has_bank": true,
+        "interest_rate_percent": 3.0,
+        "has_shipyard": false,
+        "has_upgrade_market": false,
+        "has_drone_market": false,
+        "has_missile_supply": false,
+        "has_repair": true,
+        "has_fuel": true
+      },
+      "commodities": {
+        "produces": ["food_supplies", "electronics", "luxury_goods"],
+        "consumes": ["raw_ore", "refined_ore", "machinery"]
+      }
+    },
+    {
+      "port_id": "meridian_industrial",
+      "name": "Meridian Industrial Supply",
+      "system_id": "meridian",
+      "port_type": "trading",
+      "description": "Specializes in machinery and industrial equipment.",
+      "services": {
+        "has_bank": false,
+        "interest_rate_percent": 0.0,
+        "has_shipyard": false,
+        "has_upgrade_market": false,
+        "has_drone_market": false,
+        "has_missile_supply": true,
+        "has_repair": true,
+        "has_fuel": true
+      },
+      "commodities": {
+        "produces": ["machinery", "electronics"],
+        "consumes": ["raw_ore", "refined_ore"]
+      }
+    },
+    {
+      "port_id": "callisto_extraction_base",
+      "name": "Callisto Extraction Base",
+      "system_id": "callisto_depot",
+      "port_type": "mining",
+      "description": "Heavy-duty mining operations run by the Callisto Industrial Consortium.",
+      "services": {
+        "has_bank": true,
+        "interest_rate_percent": 3.5,
+        "has_shipyard": false,
+        "has_upgrade_market": false,
+        "has_drone_market": false,
+        "has_missile_supply": false,
+        "has_repair": true,
+        "has_fuel": true
+      },
+      "commodities": {
+        "produces": ["raw_ore", "fuel_cells"],
+        "consumes": ["food_supplies", "machinery", "electronics"]
+      }
+    },
+    {
+      "port_id": "callisto_fuel_depot",
+      "name": "Callisto Fuel Depot",
+      "system_id": "callisto_depot",
+      "port_type": "refueling",
+      "description": "Bulk fuel storage serving the mining operations.",
+      "services": {
+        "has_bank": false,
+        "interest_rate_percent": 0.0,
+        "has_shipyard": false,
+        "has_upgrade_market": false,
+        "has_drone_market": false,
+        "has_missile_supply": false,
+        "has_repair": true,
+        "has_fuel": true
+      },
+      "commodities": {
+        "produces": ["fuel_cells"],
+        "consumes": []
+      }
+    },
+    {
+      "port_id": "iron_cross_mine",
+      "name": "Iron Cross Mine",
+      "system_id": "iron_cross",
+      "port_type": "mining",
+      "description": "Dangerous but profitable ore extraction in the asteroid field.",
+      "services": {
+        "has_bank": false,
+        "interest_rate_percent": 0.0,
+        "has_shipyard": false,
+        "has_upgrade_market": false,
+        "has_drone_market": false,
+        "has_missile_supply": false,
+        "has_repair": true,
+        "has_fuel": true
+      },
+      "commodities": {
+        "produces": ["raw_ore", "fuel_cells"],
+        "consumes": ["food_supplies", "machinery"]
+      }
+    },
+    {
+      "port_id": "harbor_point_exchange",
+      "name": "Harbor Point Exchange",
+      "system_id": "harbor_point",
+      "port_type": "trading",
+      "description": "A trading hub at the southern transit junction.",
+      "services": {
+        "has_bank": true,
+        "interest_rate_percent": 3.0,
+        "has_shipyard": false,
+        "has_upgrade_market": false,
+        "has_drone_market": false,
+        "has_missile_supply": false,
+        "has_repair": true,
+        "has_fuel": true
+      },
+      "commodities": {
+        "produces": ["food_supplies", "electronics", "luxury_goods"],
+        "consumes": ["raw_ore", "refined_ore", "machinery"]
+      }
+    },
+    {
+      "port_id": "harbor_point_fuel",
+      "name": "Harbor Point Fueling",
+      "system_id": "harbor_point",
+      "port_type": "refueling",
+      "description": "Last safe fueling stop before the southern frontier.",
+      "services": {
+        "has_bank": false,
+        "interest_rate_percent": 0.0,
+        "has_shipyard": false,
+        "has_upgrade_market": false,
+        "has_drone_market": false,
+        "has_missile_supply": false,
+        "has_repair": true,
+        "has_fuel": true
+      },
+      "commodities": {
+        "produces": ["fuel_cells", "food_supplies"],
+        "consumes": []
+      }
+    },
+    {
+      "port_id": "deadrock_excavation",
+      "name": "Deadrock Excavation Post",
+      "system_id": "deadrock",
+      "port_type": "mining",
+      "description": "Brutal working conditions. Excellent ore yields. No security patrol in range.",
+      "services": {
+        "has_bank": true,
+        "interest_rate_percent": 10.0,
+        "has_shipyard": false,
+        "has_upgrade_market": false,
+        "has_drone_market": false,
+        "has_missile_supply": true,
+        "has_repair": true,
+        "has_fuel": true
+      },
+      "commodities": {
+        "produces": ["raw_ore", "fuel_cells"],
+        "consumes": ["food_supplies", "machinery", "electronics"]
+      }
+    },
+    {
+      "port_id": "the_narrows_waystation",
+      "name": "The Narrows Waystation",
+      "system_id": "the_narrows",
+      "port_type": "refueling",
+      "description": "A bare-bones stop in pirate territory. Lock your cargo.",
+      "services": {
+        "has_bank": false,
+        "interest_rate_percent": 0.0,
+        "has_shipyard": false,
+        "has_upgrade_market": false,
+        "has_drone_market": false,
+        "has_missile_supply": true,
+        "has_repair": true,
+        "has_fuel": true
+      },
+      "commodities": {
+        "produces": ["fuel_cells"],
+        "consumes": []
+      }
+    },
+    {
+      "port_id": "rust_belt_primary",
+      "name": "Rust Belt Primary Extraction",
+      "system_id": "rust_belt",
+      "port_type": "mining",
+      "description": "Aging equipment, dangerous conditions, competitive ore prices.",
+      "services": {
+        "has_bank": true,
+        "interest_rate_percent": 10.0,
+        "has_shipyard": false,
+        "has_upgrade_market": false,
+        "has_drone_market": false,
+        "has_missile_supply": false,
+        "has_repair": true,
+        "has_fuel": true
+      },
+      "commodities": {
+        "produces": ["raw_ore", "fuel_cells"],
+        "consumes": ["food_supplies", "machinery"]
+      }
+    },
+    {
+      "port_id": "rust_belt_secondary",
+      "name": "Rust Belt Secondary Site",
+      "system_id": "rust_belt",
+      "port_type": "mining",
+      "description": "A second extraction site in the Rust Belt. Less productive but operational.",
+      "services": {
+        "has_bank": false,
+        "interest_rate_percent": 0.0,
+        "has_shipyard": false,
+        "has_upgrade_market": false,
+        "has_drone_market": false,
+        "has_missile_supply": false,
+        "has_repair": true,
+        "has_fuel": false
+      },
+      "commodities": {
+        "produces": ["raw_ore"],
+        "consumes": ["food_supplies", "electronics"]
+      }
+    },
+    {
+      "port_id": "outpost_9_fuel",
+      "name": "Outpost 9 Fuel Stop",
+      "system_id": "outpost_9",
+      "port_type": "refueling",
+      "description": "No questions asked. Fuel and basic repairs only.",
+      "services": {
+        "has_bank": false,
+        "interest_rate_percent": 0.0,
+        "has_shipyard": false,
+        "has_upgrade_market": false,
+        "has_drone_market": false,
+        "has_missile_supply": true,
+        "has_repair": true,
+        "has_fuel": true
+      },
+      "commodities": {
+        "produces": ["fuel_cells"],
+        "consumes": []
+      }
+    },
+    {
+      "port_id": "void_anchor_trading",
+      "name": "Void Anchor Trading Post",
+      "system_id": "void_anchor",
+      "port_type": "trading",
+      "description": "A trading post in the deep frontier. Goods sourced from undisclosed suppliers.",
+      "services": {
+        "has_bank": true,
+        "interest_rate_percent": 12.0,
+        "has_shipyard": false,
+        "has_upgrade_market": false,
+        "has_drone_market": false,
+        "has_missile_supply": true,
+        "has_repair": true,
+        "has_fuel": true
+      },
+      "commodities": {
+        "produces": ["food_supplies", "luxury_goods", "electronics"],
+        "consumes": ["raw_ore", "refined_ore", "machinery"]
+      }
+    },
+    {
+      "port_id": "slag_heap_mine",
+      "name": "Slag Heap Mining Op",
+      "system_id": "slag_heap",
+      "port_type": "mining",
+      "description": "Scraping the last ore from exhausted deposits. Prices are the only reason to come here.",
+      "services": {
+        "has_bank": false,
+        "interest_rate_percent": 0.0,
+        "has_shipyard": false,
+        "has_upgrade_market": false,
+        "has_drone_market": false,
+        "has_missile_supply": false,
+        "has_repair": true,
+        "has_fuel": true
+      },
+      "commodities": {
+        "produces": ["raw_ore", "fuel_cells"],
+        "consumes": ["food_supplies", "machinery", "electronics"]
+      }
+    },
+    {
+      "port_id": "far_drift_fuel",
+      "name": "Far Drift Fuel Cache",
+      "system_id": "far_drift",
+      "port_type": "refueling",
+      "description": "The southernmost refueling point in charted space.",
+      "services": {
+        "has_bank": false,
+        "interest_rate_percent": 0.0,
+        "has_shipyard": false,
+        "has_upgrade_market": false,
+        "has_drone_market": false,
+        "has_missile_supply": false,
+        "has_repair": true,
+        "has_fuel": true
+      },
+      "commodities": {
+        "produces": ["fuel_cells"],
+        "consumes": []
+      }
+    },
+    {
+      "port_id": "terminus_market",
+      "name": "Terminus Market",
+      "system_id": "terminus",
+      "port_type": "trading",
+      "description": "The end of the line. Pays a premium for anything that makes it this far.",
+      "services": {
+        "has_bank": true,
+        "interest_rate_percent": 15.0,
+        "has_shipyard": false,
+        "has_upgrade_market": false,
+        "has_drone_market": false,
+        "has_missile_supply": true,
+        "has_repair": true,
+        "has_fuel": true
+      },
+      "commodities": {
+        "produces": ["food_supplies", "luxury_goods"],
+        "consumes": ["raw_ore", "refined_ore", "machinery", "electronics", "food_supplies", "luxury_goods"]
+      }
+    },
+    {
+      "port_id": "terminus_supply_depot",
+      "name": "Terminus Supply Depot",
+      "system_id": "terminus",
+      "port_type": "trading",
+      "description": "Secondary depot handling bulk supply contracts for the outer settlements.",
+      "services": {
+        "has_bank": false,
+        "interest_rate_percent": 0.0,
+        "has_shipyard": false,
+        "has_upgrade_market": false,
+        "has_drone_market": false,
+        "has_missile_supply": false,
+        "has_repair": true,
+        "has_fuel": true
+      },
+      "commodities": {
+        "produces": ["machinery", "electronics"],
+        "consumes": ["raw_ore", "fuel_cells", "food_supplies"]
+      }
+    }
+  ]
+}
