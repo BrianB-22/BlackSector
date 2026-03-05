@@ -1,6 +1,6 @@
 # Database Schema Specification
 
-## Version: 0.3
+## Version: 0.4
 
 ## Status: Draft
 
@@ -20,7 +20,42 @@ SQLite is chosen for its simplicity, zero-configuration deployment, and sufficie
 
 ---
 
-# 2. Design Principles
+# 2. SQLite Runtime Configuration
+
+The following PRAGMAs must be set on every database connection at open time, before any queries execute.
+
+## 2.1 WAL Mode
+
+```sql
+PRAGMA journal_mode=WAL;
+PRAGMA synchronous=NORMAL;
+```
+
+**Why WAL is required:**
+
+The server runs a single-writer tick engine alongside multiple concurrent SSH sessions (readers). Without WAL, any active read transaction will block writes — the tick engine stalls waiting for readers to finish, and readers see `SQLITE_BUSY` errors during ticks.
+
+WAL (Write-Ahead Log) allows:
+- Concurrent readers without blocking the writer
+- The tick engine to commit writes while SSH sessions are actively reading game state
+- `synchronous=NORMAL` to reduce fsync overhead while remaining crash-safe
+
+**Set on every connection open** — not once at startup. SQLite PRAGMAs are connection-scoped.
+
+## 2.2 Other Required PRAGMAs
+
+```sql
+PRAGMA foreign_keys=ON;
+PRAGMA busy_timeout=5000;
+```
+
+`foreign_keys=ON`: SQLite does not enforce FK constraints by default. Must be enabled per connection.
+
+`busy_timeout=5000`: If a write lock is briefly held, retry for up to 5 seconds before returning `SQLITE_BUSY`. Prevents spurious errors during tick bursts.
+
+---
+
+# 3. Design Principles
 
 * Schema reflects the entity model, not protocol messages
 * All positions stored as two-dimensional (x, y) — no Z coordinate

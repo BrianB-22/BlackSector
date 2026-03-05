@@ -30,7 +30,7 @@ IN SCOPE:
 
 OUT OF SCOPE:
 - Hazard logic (see hazard_system.md)
-- Drone mechanics (see drone_system.md)
+- Drone mechanics (see `docs/12_communications/communications_system.md` Section 14)
 - Rare anomaly events
 - Economic price modeling
 
