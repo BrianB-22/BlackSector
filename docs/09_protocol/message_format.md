@@ -40,7 +40,7 @@ All protocol messages MUST conform to this format.
 \*\*OUT OF SCOPE:\*\*
 
 - Transport layer (SSH/TCP/Telnet)  
-- Handshake semantics (see `handshake\_flow.md`)  
+- Handshake semantics (see `handshake\_protocol.md`)  
 - UI rendering behavior  
 - Internal simulation logic  
 

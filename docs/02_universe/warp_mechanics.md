@@ -258,8 +258,8 @@ Rare event where ship arrives in unintended adjacent sector.
 
 Movement processing must:
 
-- execute within <1 ms per 1,000 ships
-- support >100,000 concurrent ships
+- execute within <1 ms per 100 ships
+- support 50–100 concurrent players
 - avoid graph recalculation during tick
 
 Warp validation must be constant-time using adjacency lists.

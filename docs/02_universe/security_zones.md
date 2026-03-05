@@ -60,6 +60,10 @@ Each star system has:
 
 SecurityRating ∈ \[0.0 – 1.0]
 
+OR
+
+SecurityRating = NULL (Black Sector — unclassified, unmonitored space)
+
 SecurityRating influences:
 
 - Mining yield multiplier
@@ -71,17 +75,21 @@ SecurityRating influences:
 
 SecurityRating is assigned during procedural generation and is immutable in v1.
 
+Black Sector systems are rare and treated as a distinct classification outside the normal rating scale.
+
 ---
 
 # 5. Zone Classification
 
 Security zones are grouped as:
 
-High Security  
+High Security
 
-Medium Security  
+Medium Security
 
-Low Security  
+Low Security
+
+Black Sector
 
 Thresholds (configurable):
 
@@ -97,7 +105,13 @@ Low Security:
 
 0.0 – 0.4
 
+Black Sector:
+
+SecurityRating = NULL (not on the 0.0–1.0 scale)
+
 Zone classification derived from SecurityRating.
+
+Black Sector systems are procedurally seeded but rare. They represent the game's namesake extreme — space that exists outside any known authority or mapping.
 
 ---
 
@@ -163,6 +177,32 @@ Low Security must feel lucrative but unstable.
 
 ---
 
+# 8.5 Black Sector Zone Rules
+
+Characteristics:
+
+- No security rating
+- Contraband markets active
+- Extreme mining yield variance
+- Maximum hazard probability
+- Maximum pirate spawn rate
+- Rare and exotic commodity presence
+- No law enforcement of any kind
+- PvP unrestricted and expected
+
+Gameplay effects:
+
+- Highest RareMineralChance in the game
+- Extreme economic volatility
+- Contraband goods tradeable without restriction
+- Survival is not guaranteed
+
+Black Sector must feel lawless, ancient, and dangerous.
+
+These are the systems the game is named after.
+
+---
+
 # 9. PvP Behavior Model by Zone
 
 High Security:
@@ -181,6 +221,12 @@ Low Security:
 - PvP expected
 - No penalties
 - Increased pirate overlap
+
+Black Sector:
+
+- PvP constant
+- No rules
+- Entering is a deliberate risk decision
 
 Zone must shape behavior indirectly, not hard-disable PvP.
 
@@ -204,11 +250,17 @@ Low:
 
 1.3 (configurable)
 
+Black Sector:
+
+2.0+ (extreme variance, configurable)
+
 RareMineralChance scaled by:
 
 (1 − SecurityRating)
 
 Lower security increases rare discovery probability.
+
+Black Sector uses maximum RareMineralChance with high variance — yields may be extraordinary or nearly nothing.
 
 ---
 
@@ -225,6 +277,10 @@ Rare hazards
 Low Security:
 
 Frequent hazards
+
+Black Sector:
+
+Constant hazards — assumed hostile environment
 
 Hazard intensity may scale with zone.
 
@@ -245,6 +301,11 @@ High Security:
 
 - Rare pirate presence
 
+Black Sector:
+
+- Maximum pirate density
+- Ambush assumed, not exceptional
+
 ---
 
 # 13. Economic Volatility Model
@@ -263,6 +324,12 @@ Low Security:
 High Security:
 
 - Stabilized market behavior
+
+Black Sector:
+
+- Extreme volatility
+- Contraband goods tradeable
+- No price floor enforcement
 
 ---
 
@@ -328,6 +395,8 @@ Tests must verify:
 - Pirate scaling correctness
 - Rare mineral scaling correctness
 - Deterministic assignment
+- Black Sector correctly identified by NULL SecurityRating
+- Black Sector modifiers applied independently of rating scale
 
 Replay tests must confirm identical behavior across runs.
 

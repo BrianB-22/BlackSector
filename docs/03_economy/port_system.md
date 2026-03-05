@@ -120,7 +120,6 @@ Commodity removed from a port during each economic tick.
 * sector_id: uint64
 * port_class: enum
 * infrastructure_level: int
-* owner_faction_id: optional<uint32>
 
 ---
 
@@ -304,7 +303,6 @@ Used By:
 * AI Trader System
 * Player Trading Interface
 * Economic Analytics
-* Faction Logistics
 
 ---
 
@@ -331,8 +329,8 @@ Trading unavailable until state resolves.
 
 Economic updates must support:
 
-* 10,000+ ports
-* 100,000+ transactions per hour
+* up to 1,000 ports
+* 50–100 concurrent players transacting
 
 Inventory updates must occur during the economic tick phase.
 

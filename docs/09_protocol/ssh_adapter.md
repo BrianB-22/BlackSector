@@ -10,9 +10,11 @@
 
 Defines how the Command Line Interface (CLI) client operates using SSH sessions.
 
-In the initial architecture, the SSH session itself functions as the CLI client. The server provides the interactive interface through the TEXT adapter, which renders terminal output and processes keyboard input.
+**SSH is the primary client interface for Black Sector in v1.** The game is a rich text-based experience accessed via SSH. Players connect using any standard SSH client — no dedicated application is required.
 
-This approach allows players and developers to connect to the game server using standard SSH clients without requiring a dedicated client application.
+The SSH port (default: 2222) is the designated TEXT mode interface. Connecting to this port automatically establishes a TEXT mode session. A separate TCP port (default: 2223) is reserved for future GUI clients. See `gui_adapter.md`.
+
+In the initial architecture, the SSH session itself functions as the CLI client. The server provides the interactive interface through the TEXT adapter, which renders terminal output and processes keyboard input.
 
 ---
 
@@ -132,15 +134,15 @@ No dedicated client installation is required.
 
 SSH CLI sessions follow this lifecycle:
 
-Connection established  
-↓  
-Protocol handshake  
-↓  
-Interface mode selected (TEXT)  
-↓  
-Terminal interface initialized  
-↓  
-Interactive session begins  
+Connection established on SSH port (2222)
+↓
+SSH authentication completes
+↓
+Protocol handshake (TEXT mode implicit — no negotiation)
+↓
+Terminal interface initialized
+↓
+Interactive session begins
 
 Session ends when:
 
@@ -177,13 +179,13 @@ xterm-256color
 
 # 10. Integration with Protocol Layer
 
-The CLI interface uses the same protocol layer as GUI clients.
+The CLI interface uses the same protocol message envelope as GUI clients.
 
-TEXT mode operates as an adapter that converts structured protocol messages into terminal output.
+TEXT mode operates as an adapter that converts structured protocol messages into ANSI terminal output. The underlying message format is identical.
 
-The underlying protocol remains unchanged.
+GUI clients connect on a separate TCP port (2223) and receive the same structured messages without ANSI rendering. See `gui_adapter.md`.
 
-This ensures consistent behavior across CLI and GUI clients.
+The dual-port model means client type is determined at connection time — no in-session switching.
 
 ---
 

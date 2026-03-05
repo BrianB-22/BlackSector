@@ -122,7 +122,7 @@ Persistent
 - object_id: UUID
 - region_id: UUID
 - object_type: enum
-- coordinates: Vector3
+- coordinates: Vector2
 - discovery_level: enum
 - discovered_by: UUID
 - discovery_timestamp: datetime
@@ -331,8 +331,8 @@ Fields:
 
 corridor_id: UUID  
 region_id: UUID  
-start_position: Vector3  
-end_position: Vector3  
+start_position: Vector2
+end_position: Vector2
 corridor_width: float  
 hazard_reduction: float  
 discovered_by: UUID  

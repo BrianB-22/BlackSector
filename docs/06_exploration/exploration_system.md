@@ -125,7 +125,7 @@ Persistent
 
 - object_id: UUID
 - object_type: enum
-- position: Vector3
+- position: Vector2
 - signal_type: enum
 - signal_strength: float
 - region_id: UUID
@@ -142,7 +142,7 @@ Transient
 - signal_id: UUID
 - player_id: UUID
 - signal_type: enum
-- estimated_direction: Vector3
+- estimated_direction: Vector2
 - estimated_distance: float
 - signal_strength: float
 

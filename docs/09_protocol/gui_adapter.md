@@ -12,6 +12,10 @@ Defines the architectural model for graphical user interface (GUI) clients that 
 
 The GUI client will be introduced in a future version of the system. This specification establishes the rules required to support graphical clients without altering the server’s simulation logic.
 
+**GUI clients connect on a dedicated TLS/TCP port (default: 2223), separate from the SSH port used by text clients.** Connecting to this port automatically establishes a GUI mode session. No interface mode negotiation is required — the port determines the mode.
+
+**TLS is required on port 2223.** The server must reject plaintext TCP connections on this port. All traffic — including authentication tokens — is encrypted in transit. The server must be configured with a valid TLS certificate.
+
 The GUI client consumes structured protocol messages and renders them locally using graphical assets and interface components.
 
 The server does not render graphical interfaces.
@@ -56,15 +60,15 @@ The protocol acts as the **stable API** between simulation and graphical interfa
 
 The GUI client operates through the following pipeline:
 
-Simulation Engine  
-↓  
-Structured Protocol Messages  
-↓  
-Transport Layer (TCP / SSH / future transports)  
-↓  
-GUI Client  
-↓  
-Local Rendering Engine  
+Simulation Engine
+↓
+Structured Protocol Messages
+↓
+TLS/TCP Transport (port 2223)
+↓
+GUI Client
+↓
+Local Rendering Engine
 
 The GUI client receives protocol messages and constructs the graphical interface locally.
 
@@ -167,24 +171,33 @@ The protocol remains independent of specific GUI implementations.
 
 # 10. Integration with Protocol Layer
 
-GUI clients operate in **GUI interface mode**, negotiated during the protocol handshake.
+GUI clients connect on TLS/TCP port 2223. Interface mode is implicit — no negotiation is required.
 
-Example handshake request:
+The server requires a TLS handshake before any protocol traffic is exchanged. Plaintext connections on port 2223 are rejected.
 
-```
+The server recognizes all connections on TCP port 2223 as GUI mode and sends structured JSON messages accordingly.
+
+Example handshake response sent by GUI client:
+
+```json
 {
   "type": "handshake_response",
+  "timestamp": 1709600001,
   "protocol_version": "1.0",
-  "interface_mode": "GUI",
-  "client_capabilities": []
+  "correlation_id": "<uuid>",
+  "payload": {
+    "player_token": "<auth_token>"
+  }
 }
 ```
 
-Once GUI mode is selected:
+In GUI mode:
 
-- the server sends structured JSON messages
+- server sends structured JSON messages only
 - no ANSI formatting is transmitted
 - all rendering occurs client-side
+
+See `handshake_protocol.md` for the full GUI port handshake flow.
 
 ---
 

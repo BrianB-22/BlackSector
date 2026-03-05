@@ -127,7 +127,7 @@ Persistent
 
 - node_id: UUID
 - node_type: enum
-- position: Vector3
+- position: Vector2
 - region_id: UUID
 - is_public: bool
 
@@ -151,7 +151,7 @@ Transient
 Transient
 
 - waypoint_id: UUID
-- position: Vector3
+- position: Vector2
 - region_id: UUID
 - waypoint_type: enum
 

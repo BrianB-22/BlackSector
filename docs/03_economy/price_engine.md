@@ -227,8 +227,8 @@ Corrected during next update cycle.
 
 System must support:
 
-* 10,000+ ports
-* 50+ commodities
+* up to 1,000 ports
+* 10–50 commodities
 * frequent price updates
 
 Price calculation must remain under 5 ms per economic tick.

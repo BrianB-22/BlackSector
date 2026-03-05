@@ -1,5 +1,5 @@
 # Message Types Specification
-## Version: 0.1
+## Version: 0.2
 ## Status: Draft
 ## Owner: Core Architecture
 ## Last Updated: 2026-03-04
@@ -37,11 +37,11 @@ Used for session and protocol operations.
 
 Examples:
 
-system_handshake_init  
-system_handshake_ack  
-system_handshake_reject  
-system_tick_update  
-system_shutdown  
+handshake_init  
+handshake_ack  
+handshake_reject  
+tick_update  
+server_shutdown  
 
 ---
 
@@ -117,13 +117,36 @@ hazard_warning
 
 ---
 
-# 10. Error Messages
+# 10. Communications Messages
+
+Represent player-to-player and player-to-drone messaging.
 
 Examples:
 
-error_invalid_command  
-error_rate_limited  
-error_unauthorized  
+message_received
+irn_outage
+
+---
+
+# 11. Drone Messages
+
+Represent drone control and telemetry.
+
+Examples:
+
+drone_telemetry
+
+Note: Drone commands are submitted via `command_submit` with `command: "drone_command"`. Drone telemetry responses use the `drone_telemetry` type.
+
+---
+
+# 12. Error Messages
+
+Examples:
+
+error_invalid_command
+error_rate_limited
+error_unauthorized
 
 ---
 

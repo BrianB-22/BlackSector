@@ -113,10 +113,6 @@ Persistent fields stored in universe database.
 
 Mutable state attached to sectors.
 
-- deployed_fighters: int
-- deployed_mines: int
-- ownership_faction_id: optional<uint32>
-- infrastructure_level: int
 - hazard_state: enum
 - scan_visibility_mask: bitset
 
@@ -142,27 +138,19 @@ Most sectors remain static during runtime.
 
 However certain sector states may change.
 
-NORMAL  
+NORMAL
 → Sector behaves according to baseline rules.
 
-HAZARD_ACTIVE  
+HAZARD_ACTIVE
 → Temporary environmental hazards present.
 
-CONTROLLED  
-→ Sector controlled by faction infrastructure.
-
-CONTESTED  
-→ Multiple factions attempting control.
-
-DEGRADED  
+DEGRADED
 → Infrastructure damaged or unstable.
 
 Transitions are triggered by:
 
 - combat
-- faction influence
 - anomaly activity
-- scripted events
 
 ---
 
@@ -195,11 +183,11 @@ Sector topology itself does not change during normal gameplay.
 MaxConnectionsPerSector  
 Range: 1–12
 
-RegionSize  
-Range: 500–50,000 sectors
+RegionSize
+Range: 10–50 sectors
 
-SystemSize  
-Range: 10–300 sectors
+SystemSize
+Range: 1–10 sectors
 
 HazardProbability  
 Range: 0–0.25
@@ -295,8 +283,8 @@ Requirements:
 
 Target scale:
 
-- 1,000,000+ sectors
-- 100,000+ active ships
+- 500–1,000 sectors
+- 50–100 active players
 
 ---
 

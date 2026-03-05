@@ -286,7 +286,7 @@ Data market queries must remain efficient.
 Expected performance:
 
 - <5ms listing retrieval
-- scalable to millions of listings
+- scalable to thousands of listings
 
 Listings should be indexed by:
 

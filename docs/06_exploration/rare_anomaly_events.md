@@ -104,7 +104,7 @@ Persistent
 
 - anomaly_id: UUID
 - anomaly_type: enum
-- position: Vector3
+- position: Vector2
 - region_id: UUID
 - signal_type: enum
 - signal_strength: float

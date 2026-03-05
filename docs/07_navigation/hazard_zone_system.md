@@ -105,7 +105,7 @@ Persistent
 - hazard_id: UUID
 - hazard_type: enum
 - region_id: UUID
-- position: Vector3
+- position: Vector2
 - radius: float
 - severity_level: float
 - discovery_state: enum
