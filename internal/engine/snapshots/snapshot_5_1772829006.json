@@ -1,0 +1,21 @@
+{
+  "snapshot_version": "1.0",
+  "tick": 5,
+  "timestamp": 1772829006,
+  "server_name": "Test Server",
+  "protocol_version": "1.0",
+  "state": {
+    "players": [
+      {
+        "PlayerID": "player-001",
+        "PlayerName": "TestPlayer",
+        "TokenHash": "hash123",
+        "Credits": 10000,
+        "CreatedAt": 1772829005,
+        "LastLoginAt": null,
+        "IsBanned": false
+      }
+    ],
+    "sessions": null
+  }
+}

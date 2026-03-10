@@ -1,0 +1,842 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>engine: Go Coverage Report</title>
+		<style>
+			body {
+				background: black;
+				color: rgb(80, 80, 80);
+			}
+			body, pre, #legend span {
+				font-family: Menlo, monospace;
+				font-weight: bold;
+			}
+			#topbar {
+				background: black;
+				position: fixed;
+				top: 0; left: 0; right: 0;
+				height: 42px;
+				border-bottom: 1px solid rgb(80, 80, 80);
+			}
+			#content {
+				margin-top: 50px;
+			}
+			#nav, #legend {
+				float: left;
+				margin-left: 10px;
+			}
+			#legend {
+				margin-top: 12px;
+			}
+			#nav {
+				margin-top: 10px;
+			}
+			#legend span {
+				margin: 0 5px;
+			}
+			.cov0 { color: rgb(192, 0, 0) }
+.cov1 { color: rgb(128, 128, 128) }
+.cov2 { color: rgb(116, 140, 131) }
+.cov3 { color: rgb(104, 152, 134) }
+.cov4 { color: rgb(92, 164, 137) }
+.cov5 { color: rgb(80, 176, 140) }
+.cov6 { color: rgb(68, 188, 143) }
+.cov7 { color: rgb(56, 200, 146) }
+.cov8 { color: rgb(44, 212, 149) }
+.cov9 { color: rgb(32, 224, 152) }
+.cov10 { color: rgb(20, 236, 155) }
+
+		</style>
+	</head>
+	<body>
+		<div id="topbar">
+			<div id="nav">
+				<select id="files">
+				
+				<option value="file0">github.com/BrianB-22/BlackSector/internal/engine/engine.go (81.0%)</option>
+				
+				</select>
+			</div>
+			<div id="legend">
+				<span>not tracked</span>
+			
+				<span class="cov0">not covered</span>
+				<span class="cov8">covered</span>
+			
+			</div>
+		</div>
+		<div id="content">
+		
+		<pre class="file" id="file0" style="display: none">package engine
+
+import (
+        "encoding/json"
+        "fmt"
+        "time"
+
+        "github.com/rs/zerolog"
+        "github.com/BrianB-22/BlackSector/internal/db"
+        "github.com/BrianB-22/BlackSector/internal/session"
+        "github.com/BrianB-22/BlackSector/internal/snapshot"
+)
+
+// Command represents a player action to be processed by the tick engine
+type Command struct {
+        SessionID   string
+        PlayerID    string
+        CommandType string
+        Payload     []byte // JSON payload
+        EnqueuedAt  int64  // Unix timestamp
+}
+// StateUpdate represents a game state snapshot broadcast to sessions
+// Contains all information a session needs to update its TUI
+type StateUpdate struct {
+        TickNumber int64
+        Timestamp  int64
+        PlayerState *PlayerState
+        Events     []GameEvent
+}
+
+// PlayerState contains the current state for a specific player
+type PlayerState struct {
+        PlayerID string
+        Credits  int64
+        Ship     *db.Ship
+        Cargo    []db.CargoSlot
+        // Future: combat state, mission state, etc.
+}
+
+// GameEvent represents a notable event that occurred this tick
+type GameEvent struct {
+        EventType string // "jump_complete", "trade_complete", "combat_start", etc.
+        Message   string
+        Data      map[string]interface{}
+}
+
+// ErrorEvent represents an error that occurred during command processing
+// This is sent to the affected player's session to display the error
+type ErrorEvent struct {
+        CommandType string
+        ErrorMsg    string
+        Tick        int64
+}
+
+// Navigation command payloads
+type JumpPayload struct {
+        TargetSystemID int `json:"target_system_id"`
+}
+
+type DockPayload struct {
+        PortID int `json:"port_id"`
+}
+
+// UndockPayload is empty - undock doesn't need parameters
+type UndockPayload struct{}
+
+// Economy command payloads
+type BuyPayload struct {
+        PortID      int    `json:"port_id"`
+        CommodityID string `json:"commodity_id"`
+        Quantity    int    `json:"quantity"`
+}
+
+type SellPayload struct {
+        PortID      int    `json:"port_id"`
+        CommodityID string `json:"commodity_id"`
+        Quantity    int    `json:"quantity"`
+}
+
+
+// Navigator defines the interface for ship navigation operations
+type Navigator interface {
+        Jump(shipID string, targetSystemID int, currentTick int64) error
+        Dock(shipID string, portID int, currentTick int64) error
+        Undock(shipID string, currentTick int64) error
+}
+
+// Trader defines the interface for commodity trading operations
+type Trader interface {
+        BuyCommodity(shipID string, portID int, commodityID string, quantity int, tick int64) error
+        SellCommodity(shipID string, portID int, commodityID string, quantity int, tick int64) error
+}
+
+// TickEngine is the authoritative simulation loop that owns all game state mutations.
+// It runs in a single goroutine and processes commands from player sessions.
+type TickEngine struct {
+        tickNumber            int64
+        tickInterval          time.Duration
+        running               bool
+        commandQueue          chan Command
+        shutdownChan          chan struct{}
+        db                    *db.Database
+        sessionMgr            *session.SessionManager
+        navigation            Navigator // Navigation subsystem
+        trader                Trader    // Economy subsystem
+        logger                zerolog.Logger
+        snapshotIntervalTicks int
+        serverName            string
+}
+
+// Config contains configuration parameters for the TickEngine
+type Config struct {
+        TickIntervalMs        int
+        SnapshotIntervalTicks int
+        ServerName            string
+        InitialTickNumber     int64 // Tick number to start from (0 for fresh, snapshot.Tick+1 for recovery)
+}
+
+// NewTickEngine creates a new TickEngine instance.
+// The tick number is initialized from the provided config (either 0 for a fresh server
+// or snapshot.Tick+1 for recovery from a snapshot).
+func NewTickEngine(cfg Config, database *db.Database, sessionMgr *session.SessionManager, nav Navigator, trader Trader, logger zerolog.Logger) *TickEngine <span class="cov8" title="1">{
+        return &amp;TickEngine{
+                tickNumber:            cfg.InitialTickNumber,
+                tickInterval:          time.Duration(cfg.TickIntervalMs) * time.Millisecond,
+                running:               false,
+                commandQueue:          make(chan Command, 1000), // Buffered channel for commands
+                shutdownChan:          make(chan struct{}),
+                db:                    database,
+                sessionMgr:            sessionMgr,
+                navigation:            nav,
+                trader:                trader,
+                logger:                logger,
+                snapshotIntervalTicks: cfg.SnapshotIntervalTicks,
+                serverName:            cfg.ServerName,
+        }
+}</span>
+
+// Start sets the running flag to true, allowing the tick loop to begin
+func (te *TickEngine) Start() <span class="cov8" title="1">{
+        te.running = true
+        te.logger.Info().
+                Int64("initial_tick", te.tickNumber).
+                Int("tick_interval_ms", int(te.tickInterval.Milliseconds())).
+                Int("snapshot_interval_ticks", te.snapshotIntervalTicks).
+                Msg("Tick engine started")
+}</span>
+
+// Stop sets the running flag to false, signaling the tick loop to stop
+func (te *TickEngine) Stop() <span class="cov8" title="1">{
+        te.running = false
+        te.logger.Info().Msg("Tick engine stop requested")
+}</span>
+
+// IsRunning returns whether the tick engine is currently running
+func (te *TickEngine) IsRunning() bool <span class="cov8" title="1">{
+        return te.running
+}</span>
+
+// TickNumber returns the current tick number
+func (te *TickEngine) TickNumber() int64 <span class="cov8" title="1">{
+        return te.tickNumber
+}</span>
+
+// EnqueueCommand adds a command to the command queue for processing in the next tick
+func (te *TickEngine) EnqueueCommand(cmd Command) <span class="cov8" title="1">{
+        select </span>{
+        case te.commandQueue &lt;- cmd:<span class="cov8" title="1">
+                te.logger.Debug().
+                        Str("session_id", cmd.SessionID).
+                        Str("player_id", cmd.PlayerID).
+                        Str("command_type", cmd.CommandType).
+                        Int64("tick", te.tickNumber).
+                        Msg("Command enqueued")</span>
+        default:<span class="cov0" title="0">
+                te.logger.Warn().
+                        Str("session_id", cmd.SessionID).
+                        Str("command_type", cmd.CommandType).
+                        Msg("Command queue full, command dropped")</span>
+        }
+}
+
+// ShutdownChan returns the shutdown channel for graceful shutdown coordination
+func (te *TickEngine) ShutdownChan() &lt;-chan struct{} <span class="cov0" title="0">{
+        return te.shutdownChan
+}</span>
+// RunTickLoop executes the main game simulation loop.
+// It runs continuously while the running flag is true, incrementing the tick number
+// each iteration and maintaining consistent timing based on the configured tick interval.
+// Each tick measures its duration and logs a warning if it exceeds 500ms.
+// RunTickLoop executes the main game simulation loop.
+// It runs continuously while the running flag is true, incrementing the tick number
+// each iteration and maintaining consistent timing based on the configured tick interval.
+// Each tick measures its duration and logs a warning if it exceeds 500ms.
+// Panics are recovered with stack traces logged, and graceful shutdown is attempted.
+func (te *TickEngine) RunTickLoop() <span class="cov8" title="1">{
+        // Recover from panics in the tick loop
+        // Requirement 15.7: Recover from panics, log with stack trace, attempt graceful shutdown
+        defer func() </span><span class="cov8" title="1">{
+                if r := recover(); r != nil </span><span class="cov0" title="0">{
+                        te.logger.Error().
+                                Interface("panic", r).
+                                Stack().
+                                Int64("tick", te.tickNumber).
+                                Msg("PANIC in tick loop - attempting graceful shutdown")
+
+                        // Set running to false to signal shutdown
+                        te.running = false
+
+                        // Attempt to create a final snapshot before exiting
+                        if err := te.CreateFinalSnapshot(); err != nil </span><span class="cov0" title="0">{
+                                te.logger.Error().
+                                        Err(err).
+                                        Msg("Failed to create snapshot after panic")
+                        }</span>
+
+                        // Signal shutdown channel
+                        <span class="cov0" title="0">close(te.shutdownChan)</span>
+                }
+        }()
+
+        <span class="cov8" title="1">te.logger.Info().Msg("Tick loop starting")
+
+        for te.running </span><span class="cov8" title="1">{
+                tickStart := time.Now()
+
+                // Log current tick at DEBUG level
+                te.logger.Debug().
+                        Int64("tick", te.tickNumber).
+                        Msg("Tick executing")
+
+                // Phase 1: Drain command queue (placeholder for M1)
+                // In M1, we just drain commands but don't process them
+                te.drainCommandQueue()
+
+                // Phase 2-4: Game logic processing (empty in M1)
+                // Future milestones will add:
+                // - Command validation and processing
+                // - Subsystem resolution (navigation, combat, economy)
+                // - Event emission to sessions
+
+                // Phase 4.5: Broadcast state updates to sessions
+                te.broadcastStateUpdate()
+
+                // Phase 5: Snapshot trigger check
+                if te.snapshotIntervalTicks &gt; 0 &amp;&amp; te.tickNumber%int64(te.snapshotIntervalTicks) == 0 </span><span class="cov8" title="1">{
+                        te.logger.Info().
+                                Int64("tick", te.tickNumber).
+                                Int("snapshot_interval_ticks", te.snapshotIntervalTicks).
+                                Msg("Snapshot triggered")
+
+                        // Create snapshot with current game state
+                        snap, err := te.createSnapshot()
+                        if err != nil </span><span class="cov0" title="0">{
+                                te.logger.Error().
+                                        Err(err).
+                                        Int64("tick", te.tickNumber).
+                                        Msg("Failed to create snapshot")
+                        }</span> else<span class="cov8" title="1"> {
+                                // Write snapshot asynchronously to avoid blocking tick loop
+                                go func(s *snapshot.Snapshot) </span><span class="cov8" title="1">{
+                                        if err := snapshot.SaveSnapshot(s, "snapshots", te.logger); err != nil </span><span class="cov0" title="0">{
+                                                te.logger.Error().
+                                                        Err(err).
+                                                        Int64("tick", s.Tick).
+                                                        Msg("Failed to save snapshot")
+                                        }</span>
+                                }(snap)
+                        }
+                }
+
+                // Calculate tick duration
+                <span class="cov8" title="1">tickDuration := time.Since(tickStart)
+
+                // Log warning if tick took too long (&gt;100ms threshold)
+                if tickDuration &gt; 100*time.Millisecond </span><span class="cov0" title="0">{
+                        te.logger.Warn().
+                                Int64("tick", te.tickNumber).
+                                Int64("duration_ms", tickDuration.Milliseconds()).
+                                Msg("Slow tick detected")
+                }</span>
+
+                // Increment tick number for next iteration
+                <span class="cov8" title="1">te.tickNumber++
+
+                // Sleep for remaining interval time
+                sleepDuration := te.tickInterval - tickDuration
+                if sleepDuration &gt; 0 </span><span class="cov8" title="1">{
+                        time.Sleep(sleepDuration)
+                }</span>
+                // If tick took longer than interval, proceed immediately to next tick
+        }
+
+        <span class="cov8" title="1">te.logger.Info().
+                Int64("final_tick", te.tickNumber-1).
+                Msg("Tick loop stopped")</span>
+}
+
+// drainCommandQueue removes all pending commands from the queue.
+// Commands are drained in FIFO order, validated, and processed.
+// Navigation commands (jump, dock, undock) are routed to the navigation subsystem.
+// Invalid commands are rejected and logged.
+// Errors from subsystem operations are logged and sent to the affected player's session.
+func (te *TickEngine) drainCommandQueue() <span class="cov8" title="1">{
+        drained := 0
+        valid := 0
+        invalid := 0
+        processed := 0
+        
+        for </span><span class="cov8" title="1">{
+                select </span>{
+                case cmd := &lt;-te.commandQueue:<span class="cov8" title="1">
+                        drained++
+                        
+                        // Validate command structure
+                        if !te.validateCommand(cmd) </span><span class="cov8" title="1">{
+                                invalid++
+                                // Log rejection for invalid command
+                                te.logger.Debug().
+                                        Str("session_id", cmd.SessionID).
+                                        Str("player_id", cmd.PlayerID).
+                                        Str("command_type", cmd.CommandType).
+                                        Int64("tick", te.tickNumber).
+                                        Msg("Command rejected: invalid structure")
+                                
+                                // Send error to player session
+                                te.sendErrorToSession(cmd.SessionID, cmd.CommandType, "Invalid command structure")
+                                continue</span>
+                        }
+                        
+                        <span class="cov8" title="1">valid++
+                        
+                        // Process command by type
+                        if err := te.processCommand(cmd); err != nil </span><span class="cov8" title="1">{
+                                // Log error with structured fields
+                                te.logger.Warn().
+                                        Err(err).
+                                        Str("session_id", cmd.SessionID).
+                                        Str("player_id", cmd.PlayerID).
+                                        Str("command_type", cmd.CommandType).
+                                        Int64("tick", te.tickNumber).
+                                        Msg("Command processing failed")
+                                
+                                // Send error message to affected player's session
+                                te.sendErrorToSession(cmd.SessionID, cmd.CommandType, err.Error())
+                        }</span> else<span class="cov8" title="1"> {
+                                processed++
+                                te.logger.Debug().
+                                        Str("session_id", cmd.SessionID).
+                                        Str("player_id", cmd.PlayerID).
+                                        Str("command_type", cmd.CommandType).
+                                        Int64("tick", te.tickNumber).
+                                        Msg("Command processed successfully")
+                        }</span>
+                        
+                default:<span class="cov8" title="1">
+                        // Queue is empty
+                        if drained &gt; 0 </span><span class="cov8" title="1">{
+                                te.logger.Debug().
+                                        Int("commands_drained", drained).
+                                        Int("valid", valid).
+                                        Int("invalid", invalid).
+                                        Int("processed", processed).
+                                        Int64("tick", te.tickNumber).
+                                        Msg("Command queue drained")
+                        }</span>
+                        <span class="cov8" title="1">return</span>
+                }
+        }
+}
+
+// validateCommand performs basic structure validation on a command.
+// Returns true if the command is valid, false otherwise.
+func (te *TickEngine) validateCommand(cmd Command) bool <span class="cov8" title="1">{
+        // Basic structure validation:
+        // 1. SessionID must be non-empty
+        if cmd.SessionID == "" </span><span class="cov8" title="1">{
+                return false
+        }</span>
+        
+        // 2. PlayerID must be non-empty
+        <span class="cov8" title="1">if cmd.PlayerID == "" </span><span class="cov8" title="1">{
+                return false
+        }</span>
+        
+        // 3. CommandType must be non-empty
+        <span class="cov8" title="1">if cmd.CommandType == "" </span><span class="cov8" title="1">{
+                return false
+        }</span>
+        
+        // 4. EnqueuedAt must be positive (valid Unix timestamp)
+        <span class="cov8" title="1">if cmd.EnqueuedAt &lt;= 0 </span><span class="cov8" title="1">{
+                return false
+        }</span>
+        
+        // Payload can be empty or nil for some commands, so we don't validate it here
+        
+        <span class="cov8" title="1">return true</span>
+}
+
+
+// createSnapshot creates a snapshot of the current game state
+// It retrieves all players and sessions from the database and packages them
+// into a Snapshot struct with metadata
+func (te *TickEngine) createSnapshot() (*snapshot.Snapshot, error) <span class="cov8" title="1">{
+        // Get all players from database
+        players, err := te.db.GetAllPlayers()
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("failed to get players for snapshot: %w", err)
+        }</span>
+
+        // Get all sessions from database
+        <span class="cov8" title="1">sessions, err := te.db.GetAllSessions()
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("failed to get sessions for snapshot: %w", err)
+        }</span>
+
+        // Create snapshot with current state
+        <span class="cov8" title="1">snap := &amp;snapshot.Snapshot{
+                SnapshotVersion: "1.0",
+                Tick:            te.tickNumber,
+                Timestamp:       time.Now().Unix(),
+                ServerName:      te.serverName,
+                ProtocolVersion: "1.0",
+                State: snapshot.SnapshotState{
+                        Players:  players,
+                        Sessions: sessions,
+                },
+        }
+
+        return snap, nil</span>
+}
+
+
+// CreateFinalSnapshot creates and saves a final snapshot synchronously during shutdown.
+// Unlike the async snapshots during normal operation, this blocks until the snapshot is written.
+func (te *TickEngine) CreateFinalSnapshot() error <span class="cov8" title="1">{
+        te.logger.Info().
+                Int64("tick", te.tickNumber).
+                Msg("Creating final snapshot")
+
+        snap, err := te.createSnapshot()
+        if err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("failed to create final snapshot: %w", err)
+        }</span>
+
+        // Write synchronously (blocking)
+        <span class="cov8" title="1">if err := snapshot.SaveSnapshot(snap, "snapshots", te.logger); err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("failed to save final snapshot: %w", err)
+        }</span>
+
+        <span class="cov8" title="1">te.logger.Info().
+                Int64("tick", snap.Tick).
+                Msg("Final snapshot saved successfully")
+
+        return nil</span>
+}
+
+// processCommand routes a command to the appropriate subsystem for processing
+func (te *TickEngine) processCommand(cmd Command) error <span class="cov8" title="1">{
+        switch cmd.CommandType </span>{
+        case "jump":<span class="cov8" title="1">
+                return te.processJumpCommand(cmd)</span>
+        case "dock":<span class="cov8" title="1">
+                return te.processDockCommand(cmd)</span>
+        case "undock":<span class="cov8" title="1">
+                return te.processUndockCommand(cmd)</span>
+        case "buy":<span class="cov8" title="1">
+                return te.processBuyCommand(cmd)</span>
+        case "sell":<span class="cov8" title="1">
+                return te.processSellCommand(cmd)</span>
+        default:<span class="cov8" title="1">
+                return fmt.Errorf("unknown command type: %s", cmd.CommandType)</span>
+        }
+}
+
+// processJumpCommand handles jump navigation commands
+func (te *TickEngine) processJumpCommand(cmd Command) error <span class="cov8" title="1">{
+        // Parse payload
+        var payload JumpPayload
+        if err := json.Unmarshal(cmd.Payload, &amp;payload); err != nil </span><span class="cov8" title="1">{
+                return fmt.Errorf("parse jump payload: %w", err)
+        }</span>
+        
+        // Get ship ID from player
+        // For now, we assume one ship per player - we'll need to query the DB for the ship
+        // This is a simplified implementation for M2 integration
+        <span class="cov8" title="1">ship, err := te.db.GetShipByPlayerID(cmd.PlayerID)
+        if err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("get ship for player %s: %w", cmd.PlayerID, err)
+        }</span>
+        <span class="cov8" title="1">if ship == nil </span><span class="cov8" title="1">{
+                return fmt.Errorf("no ship found for player %s", cmd.PlayerID)
+        }</span>
+        
+        // Call navigation subsystem
+        <span class="cov8" title="1">if err := te.navigation.Jump(ship.ShipID, payload.TargetSystemID, te.tickNumber); err != nil </span><span class="cov8" title="1">{
+                return fmt.Errorf("jump: %w", err)
+        }</span>
+        
+        <span class="cov8" title="1">te.logger.Info().
+                Str("player_id", cmd.PlayerID).
+                Str("ship_id", ship.ShipID).
+                Int("target_system", payload.TargetSystemID).
+                Int64("tick", te.tickNumber).
+                Msg("Jump command processed")
+        
+        return nil</span>
+}
+
+// processDockCommand handles dock commands
+func (te *TickEngine) processDockCommand(cmd Command) error <span class="cov8" title="1">{
+        // Parse payload
+        var payload DockPayload
+        if err := json.Unmarshal(cmd.Payload, &amp;payload); err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("parse dock payload: %w", err)
+        }</span>
+        
+        // Get ship ID from player
+        <span class="cov8" title="1">ship, err := te.db.GetShipByPlayerID(cmd.PlayerID)
+        if err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("get ship for player %s: %w", cmd.PlayerID, err)
+        }</span>
+        <span class="cov8" title="1">if ship == nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("no ship found for player %s", cmd.PlayerID)
+        }</span>
+        
+        // Call navigation subsystem
+        <span class="cov8" title="1">if err := te.navigation.Dock(ship.ShipID, payload.PortID, te.tickNumber); err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("dock: %w", err)
+        }</span>
+        
+        <span class="cov8" title="1">te.logger.Info().
+                Str("player_id", cmd.PlayerID).
+                Str("ship_id", ship.ShipID).
+                Int("port_id", payload.PortID).
+                Int64("tick", te.tickNumber).
+                Msg("Dock command processed")
+        
+        return nil</span>
+}
+
+// processUndockCommand handles undock commands
+func (te *TickEngine) processUndockCommand(cmd Command) error <span class="cov8" title="1">{
+        // Get ship ID from player
+        ship, err := te.db.GetShipByPlayerID(cmd.PlayerID)
+        if err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("get ship for player %s: %w", cmd.PlayerID, err)
+        }</span>
+        <span class="cov8" title="1">if ship == nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("no ship found for player %s", cmd.PlayerID)
+        }</span>
+        
+        // Call navigation subsystem
+        <span class="cov8" title="1">if err := te.navigation.Undock(ship.ShipID, te.tickNumber); err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("undock: %w", err)
+        }</span>
+        
+        <span class="cov8" title="1">te.logger.Info().
+                Str("player_id", cmd.PlayerID).
+                Str("ship_id", ship.ShipID).
+                Int64("tick", te.tickNumber).
+                Msg("Undock command processed")
+        
+        return nil</span>
+}
+
+// processBuyCommand handles commodity purchase commands
+func (te *TickEngine) processBuyCommand(cmd Command) error <span class="cov8" title="1">{
+        // Parse payload
+        var payload BuyPayload
+        if err := json.Unmarshal(cmd.Payload, &amp;payload); err != nil </span><span class="cov8" title="1">{
+                return fmt.Errorf("parse buy payload: %w", err)
+        }</span>
+        
+        // Get ship ID from player
+        <span class="cov8" title="1">ship, err := te.db.GetShipByPlayerID(cmd.PlayerID)
+        if err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("get ship for player %s: %w", cmd.PlayerID, err)
+        }</span>
+        <span class="cov8" title="1">if ship == nil </span><span class="cov8" title="1">{
+                return fmt.Errorf("no ship found for player %s", cmd.PlayerID)
+        }</span>
+        
+        // Call economy subsystem
+        <span class="cov8" title="1">if err := te.trader.BuyCommodity(ship.ShipID, payload.PortID, payload.CommodityID, payload.Quantity, te.tickNumber); err != nil </span><span class="cov8" title="1">{
+                return fmt.Errorf("buy commodity: %w", err)
+        }</span>
+        
+        <span class="cov8" title="1">te.logger.Info().
+                Str("player_id", cmd.PlayerID).
+                Str("ship_id", ship.ShipID).
+                Int("port_id", payload.PortID).
+                Str("commodity_id", payload.CommodityID).
+                Int("quantity", payload.Quantity).
+                Int64("tick", te.tickNumber).
+                Msg("Buy command processed")
+        
+        return nil</span>
+}
+
+// processSellCommand handles commodity sale commands
+func (te *TickEngine) processSellCommand(cmd Command) error <span class="cov8" title="1">{
+        // Parse payload
+        var payload SellPayload
+        if err := json.Unmarshal(cmd.Payload, &amp;payload); err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("parse sell payload: %w", err)
+        }</span>
+        
+        // Get ship ID from player
+        <span class="cov8" title="1">ship, err := te.db.GetShipByPlayerID(cmd.PlayerID)
+        if err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("get ship for player %s: %w", cmd.PlayerID, err)
+        }</span>
+        <span class="cov8" title="1">if ship == nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("no ship found for player %s", cmd.PlayerID)
+        }</span>
+        
+        // Call economy subsystem
+        <span class="cov8" title="1">if err := te.trader.SellCommodity(ship.ShipID, payload.PortID, payload.CommodityID, payload.Quantity, te.tickNumber); err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("sell commodity: %w", err)
+        }</span>
+        
+        <span class="cov8" title="1">te.logger.Info().
+                Str("player_id", cmd.PlayerID).
+                Str("ship_id", ship.ShipID).
+                Int("port_id", payload.PortID).
+                Str("commodity_id", payload.CommodityID).
+                Int("quantity", payload.Quantity).
+                Int64("tick", te.tickNumber).
+                Msg("Sell command processed")
+        
+        return nil</span>
+}
+
+// sendErrorToSession sends an error message to a specific player's session
+// This is called when a command fails to process, allowing the player to see what went wrong
+func (te *TickEngine) sendErrorToSession(sessionID string, commandType string, errorMsg string) <span class="cov8" title="1">{
+        errorEvent := ErrorEvent{
+                CommandType: commandType,
+                ErrorMsg:    errorMsg,
+                Tick:        te.tickNumber,
+        }
+        
+        if err := te.sessionMgr.BroadcastToSession(sessionID, errorEvent); err != nil </span><span class="cov8" title="1">{
+                te.logger.Warn().
+                        Err(err).
+                        Str("session_id", sessionID).
+                        Str("command_type", commandType).
+                        Msg("Failed to send error message to session")
+        }</span>
+}
+
+// broadcastStateUpdate sends state updates to all active sessions
+// This is called after command processing in each tick
+func (te *TickEngine) broadcastStateUpdate() <span class="cov8" title="1">{
+        // Get all active sessions
+        sessions := te.sessionMgr.ActiveSessions()
+        
+        if len(sessions) == 0 </span><span class="cov8" title="1">{
+                return // No active sessions to update
+        }</span>
+        
+        // Build state updates for each session
+        <span class="cov8" title="1">updates := make(map[string]interface{})
+        
+        for _, session := range sessions </span><span class="cov8" title="1">{
+                // Get player state
+                player, err := te.db.GetPlayerByID(session.PlayerID)
+                if err != nil </span><span class="cov0" title="0">{
+                        te.logger.Warn().
+                                Err(err).
+                                Str("session_id", session.SessionID).
+                                Str("player_id", session.PlayerID).
+                                Msg("Failed to get player for state update")
+                        continue</span>
+                }
+                
+                // Get ship state
+                <span class="cov8" title="1">ship, err := te.db.GetShipByPlayerID(session.PlayerID)
+                if err != nil </span><span class="cov0" title="0">{
+                        te.logger.Warn().
+                                Err(err).
+                                Str("session_id", session.SessionID).
+                                Str("player_id", session.PlayerID).
+                                Msg("Failed to get ship for state update")
+                        continue</span>
+                }
+                
+                // Get cargo state
+                <span class="cov8" title="1">var cargo []db.CargoSlot
+                if ship != nil </span><span class="cov8" title="1">{
+                        cargo, err = te.db.GetShipCargo(ship.ShipID)
+                        if err != nil </span><span class="cov0" title="0">{
+                                te.logger.Warn().
+                                        Err(err).
+                                        Str("session_id", session.SessionID).
+                                        Str("ship_id", ship.ShipID).
+                                        Msg("Failed to get cargo for state update")
+                                // Continue with empty cargo rather than skipping the update
+                                cargo = []db.CargoSlot{}
+                        }</span>
+                }
+                
+                // Build player state
+                <span class="cov8" title="1">playerState := &amp;PlayerState{
+                        PlayerID: session.PlayerID,
+                        Credits:  player.Credits,
+                        Ship:     ship,
+                        Cargo:    cargo,
+                }
+                
+                // Create state update
+                update := StateUpdate{
+                        TickNumber:  te.tickNumber,
+                        Timestamp:   time.Now().Unix(),
+                        PlayerState: playerState,
+                        Events:      []GameEvent{}, // Future: populate with events from this tick
+                }
+                
+                updates[session.SessionID] = update</span>
+        }
+        
+        // Broadcast to all sessions
+        <span class="cov8" title="1">successCount, errors := te.sessionMgr.BroadcastToAllSessions(updates)
+        
+        if len(errors) &gt; 0 </span><span class="cov0" title="0">{
+                te.logger.Warn().
+                        Int("success_count", successCount).
+                        Int("error_count", len(errors)).
+                        Int64("tick", te.tickNumber).
+                        Msg("State broadcast completed with errors")
+        }</span> else<span class="cov8" title="1"> {
+                te.logger.Debug().
+                        Int("session_count", successCount).
+                        Int64("tick", te.tickNumber).
+                        Msg("State broadcast completed successfully")
+        }</span>
+}
+</pre>
+		
+		</div>
+	</body>
+	<script>
+	(function() {
+		var files = document.getElementById('files');
+		var visible;
+		files.addEventListener('change', onChange, false);
+		function select(part) {
+			if (visible)
+				visible.style.display = 'none';
+			visible = document.getElementById(part);
+			if (!visible)
+				return;
+			files.value = part;
+			visible.style.display = 'block';
+			location.hash = part;
+		}
+		function onChange() {
+			select(files.value);
+			window.scrollTo(0, 0);
+		}
+		if (location.hash != "") {
+			select(location.hash.substr(1));
+		}
+		if (!visible) {
+			select("file0");
+		}
+	})();
+	</script>
+</html>

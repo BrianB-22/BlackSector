@@ -1,0 +1,22 @@
+{
+  "snapshot_version": "1.0",
+  "tick": 435,
+  "timestamp": 1772833076,
+  "server_name": "Black Sector",
+  "protocol_version": "1.0",
+  "state": {
+    "players": null,
+    "sessions": [
+      {
+        "SessionID": "577e69fc-c54c-4184-8d57-b11f923a48c6",
+        "PlayerID": "test-player-1",
+        "InterfaceMode": "TEXT",
+        "State": "CONNECTED",
+        "ConnectedAt": 1772832925,
+        "DisconnectedAt": null,
+        "LingerExpiryAt": null,
+        "LastActivityAt": 1772832925
+      }
+    ]
+  }
+}

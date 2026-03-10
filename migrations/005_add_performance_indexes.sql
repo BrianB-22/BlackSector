@@ -1,0 +1,51 @@
+-- Migration: 005
+-- Description: Add performance indexes for Phase 1 gameplay
+-- Version: 0.8
+-- Related: Milestone 2 - Vertical Slice (Phase 1) - Task 9.4
+
+-- ============================================================================
+-- Performance Index Additions
+-- ============================================================================
+
+-- Sessions: Add composite index for (player_id, state) queries
+-- The GetActiveSessionByPlayerID query filters by both player_id and state
+-- This composite index will improve performance over the existing single-column index
+CREATE INDEX IF NOT EXISTS idx_sessions_player_state ON sessions (player_id, state);
+
+-- Note: The existing idx_sessions_player on (player_id) can be kept for queries
+-- that only filter by player_id, or it could be dropped since the composite index
+-- covers those queries as well. Keeping it for now to avoid breaking existing queries.
+
+-- ============================================================================
+-- Index Analysis Summary
+-- ============================================================================
+-- 
+-- EXISTING INDEXES (adequate for Phase 1):
+-- - Ships: idx_ships_player (player_id), idx_ships_system (current_system_id)
+-- - Missions: idx_missions_player (player_id, status), idx_missions_status (status), idx_missions_expiry (expires_at_tick)
+-- - Combat: idx_combat_player_ship (player_ship_id), idx_combat_status (status), idx_combat_system (system_id)
+-- - Cargo: Primary key (ship_id, slot_index) provides adequate indexing
+-- - Port inventory: Primary key (port_id, commodity_id) provides adequate indexing
+-- - Objective progress: Primary key (instance_id, objective_index) provides adequate indexing
+--
+-- QUERY PATTERNS ANALYZED:
+-- 1. Ships by player_id: ✓ Covered by idx_ships_player
+-- 2. Ships by system_id: ✓ Covered by idx_ships_system
+-- 3. Missions by player_id + status: ✓ Covered by idx_missions_player
+-- 4. Missions by status: ✓ Covered by idx_missions_status
+-- 5. Combat by player_ship_id: ✓ Covered by idx_combat_player_ship
+-- 6. Combat by status: ✓ Covered by idx_combat_status
+-- 7. Sessions by player_id + state: ✓ NOW covered by idx_sessions_player_state
+-- 8. Cargo by ship_id: ✓ Covered by primary key
+-- 9. Port inventory by port_id + commodity_id: ✓ Covered by primary key
+--
+-- DUPLICATE INDEX NOTED:
+-- - idx_missions_player and idx_missions_player_status are duplicates (both on player_id, status)
+--   This was introduced in migration 004. Consider removing idx_missions_player_status in a future
+--   cleanup migration, but keeping both for now to avoid any potential issues.
+--
+-- FUTURE CONSIDERATIONS (not needed for Phase 1):
+-- - Ships by status: Could add idx_ships_status if queries by ship status become frequent
+-- - Messages by recipient_id: Already has idx_messages_recipient (recipient_id, delivered, read_at_tick)
+-- - Bank transactions: Already has idx_bank_tx_player and idx_bank_tx_tick
+--

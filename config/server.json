@@ -28,10 +28,13 @@
     "hull_repair_cost_per_point": 10,
     "flee_base_chance": 0.35,
     "flee_energy_bonus": 0.25,
-    "missile_unit_price": 200
+    "missile_unit_price": 200,
+    "insurance_payout": 5000
   },
   "economy": {
-    "low_sec_price_multiplier": 1.18
+    "low_sec_price_multiplier": 1.18,
+    "buy_markup": 1.10,
+    "sell_markdown": 0.90
   },
   "banking": {
     "interest_apply_interval_ticks": 500
@@ -45,5 +48,10 @@
     "base_delay_ticks": 5,
     "max_delay_ticks": 20,
     "broadcast_rate_limit_per_hour": 2
+  },
+  "security": {
+    "registration_rate_limit_per_hour": 3,
+    "auth_failure_rate_limit_per_minute": 10,
+    "command_rate_limit_per_tick": 10
   }
 }

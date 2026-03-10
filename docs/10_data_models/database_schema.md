@@ -1,12 +1,12 @@
 # Database Schema Specification
 
-## Version: 0.4
+## Version: 0.6
 
 ## Status: Draft
 
 ## Owner: Core Architecture
 
-## Last Updated: 2026-03-05
+## Last Updated: 2026-03-06
 
 ---
 
@@ -399,27 +399,58 @@ Status values: `IDLE` | `TRAVELING` | `TRADING` | `DOCKED` | `DESTROYED`
 
 ---
 
-# 10. Mission Domain
+# 10. Combat Domain
+
+## Table: combat_instances
+
+```sql
+CREATE TABLE combat_instances (
+  combat_id         TEXT PRIMARY KEY,
+  player_ship_id    TEXT NOT NULL REFERENCES ships(ship_id),
+  pirate_ship_id    TEXT NOT NULL,
+  system_id         INTEGER NOT NULL REFERENCES systems(system_id),
+  start_tick        INTEGER NOT NULL,
+  status            TEXT NOT NULL CHECK (status IN ('ACTIVE', 'ENDED', 'FLED')),
+  turn_number       INTEGER NOT NULL DEFAULT 0
+);
+
+CREATE INDEX idx_combat_player_ship ON combat_instances (player_ship_id);
+CREATE INDEX idx_combat_status ON combat_instances (status);
+CREATE INDEX idx_combat_system ON combat_instances (system_id);
+```
+
+Status values: `ACTIVE` | `ENDED` | `FLED`
+
+**Note:** Pirates are ephemeral entities (not persisted after combat ends). The `pirate_ship_id` is a TEXT field that references an in-memory pirate entity, not a database table. Combat instances are removed from the database when combat ends.
+
+---
+
+# 11. Mission Domain
 
 ## Table: mission_instances
 
 ```sql
 CREATE TABLE mission_instances (
-  instance_id      TEXT PRIMARY KEY,
-  mission_id       TEXT NOT NULL,
-  player_id        TEXT NOT NULL REFERENCES players(player_id),
-  status           TEXT NOT NULL,
-  accepted_tick    INTEGER,
-  started_tick     INTEGER,
-  completed_tick   INTEGER,
-  failed_reason    TEXT,
-  expires_at_tick  INTEGER
+  instance_id              TEXT PRIMARY KEY,
+  mission_id               TEXT NOT NULL,
+  player_id                TEXT NOT NULL REFERENCES players(player_id),
+  status                   TEXT NOT NULL,
+  current_objective_index  INTEGER NOT NULL DEFAULT 0,
+  accepted_tick            INTEGER,
+  started_tick             INTEGER,
+  completed_tick           INTEGER,
+  failed_reason            TEXT,
+  expires_at_tick          INTEGER
 );
 
-CREATE INDEX idx_missions_player ON mission_instances (player_id, status);
+CREATE INDEX idx_missions_player_status ON mission_instances (player_id, status);
+CREATE INDEX idx_missions_status ON mission_instances (status);
+CREATE INDEX idx_missions_expiry ON mission_instances (expires_at_tick) WHERE expires_at_tick IS NOT NULL;
 ```
 
 Status values: `AVAILABLE` | `ACCEPTED` | `IN_PROGRESS` | `COMPLETED` | `FAILED` | `EXPIRED` | `ABANDONED`
+
+The `current_objective_index` tracks which objective the player is currently working on, allowing the mission system to evaluate objectives sequentially. This supports the Phase 1 requirement of one active mission per player (REQ-MISSION-007).
 
 ---
 
@@ -440,7 +471,7 @@ Status values: `PENDING` | `ACTIVE` | `COMPLETED` | `FAILED`
 
 ---
 
-# 11. Exploration Domain
+# 12. Exploration Domain
 
 ## Table: player_map_data
 
@@ -476,7 +507,7 @@ CREATE TABLE anomalies (
 
 ---
 
-# 12. Mining Domain
+# 13. Mining Domain
 
 ## Table: asteroid_fields
 
@@ -510,7 +541,7 @@ CREATE TABLE asteroid_field_resources (
 
 ---
 
-# 13. Navigation Domain
+# 14. Navigation Domain
 
 ## Table: player_waypoints
 
@@ -528,7 +559,7 @@ CREATE TABLE player_waypoints (
 
 ---
 
-# 14. Communications Domain
+# 15. Communications Domain
 
 ## Table: messages
 
@@ -633,7 +664,7 @@ CREATE INDEX idx_drone_telemetry_owner   ON drone_telemetry (owner_id, delivered
 
 ---
 
-# 15. Banking Domain
+# 16. Banking Domain
 
 ## Table: player_bank_accounts
 
@@ -671,7 +702,7 @@ CREATE TABLE bank_transactions (
 
 ---
 
-# 16. Performance Indexes
+# 17. Performance Indexes
 
 ```sql
 CREATE INDEX idx_sessions_player    ON sessions (player_id);
@@ -689,11 +720,14 @@ CREATE INDEX idx_waypoints_player   ON player_waypoints (player_id);
 CREATE INDEX idx_bank_accounts_player ON player_bank_accounts (player_id);
 CREATE INDEX idx_bank_tx_player     ON bank_transactions (player_id);
 CREATE INDEX idx_bank_tx_tick       ON bank_transactions (tick);
+CREATE INDEX idx_combat_player_ship ON combat_instances (player_ship_id);
+CREATE INDEX idx_combat_status      ON combat_instances (status);
+CREATE INDEX idx_combat_system      ON combat_instances (system_id);
 ```
 
 ---
 
-# 17. Configuration Data (Not Stored in Database)
+# 18. Configuration Data (Not Stored in Database)
 
 The following are loaded from JSON config files at startup and are NOT in the database:
 
@@ -711,7 +745,7 @@ These may be hot-reloaded via the admin CLI without a server restart.
 
 ---
 
-# 18. Non-Goals (v1)
+# 19. Non-Goals (v1)
 
 * Full-text search
 * Replication or read replicas

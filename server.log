@@ -1,0 +1,229 @@
+{"level":"info","version":"milestone-1-foundation","ssh_port":2222,"tick_interval_ms":2000,"time":"2026-03-05T20:10:45-05:00","message":"BlackSector server starting"}
+{"level":"info","time":"2026-03-05T20:10:45-05:00","message":"Server initialization complete (foundation stub)"}
+{"level":"info","version":"milestone-1-foundation","ssh_port":2222,"tick_interval_ms":2000,"time":"2026-03-05T20:11:39-05:00","message":"BlackSector server starting"}
+{"level":"info","time":"2026-03-05T20:11:39-05:00","message":"Server initialization complete (foundation stub)"}
+{"level":"info","version":"milestone-1-foundation","ssh_port":2222,"tick_interval_ms":2000,"time":"2026-03-05T22:11:23-05:00","message":"BlackSector server starting"}
+{"level":"info","time":"2026-03-05T22:11:23-05:00","message":"Server initialization complete (foundation stub)"}
+{"level":"info","version":"milestone-1-foundation","ssh_port":2222,"tick_interval_ms":2000,"time":"2026-03-05T22:21:12-05:00","message":"BlackSector server starting"}
+{"level":"info","db_path":"blacksector.db","time":"2026-03-05T22:21:12-05:00","message":"Initializing database"}
+{"level":"info","db_path":"blacksector.db","time":"2026-03-05T22:21:12-05:00","message":"Initializing database"}
+{"level":"info","time":"2026-03-05T22:21:12-05:00","message":"New database detected, initializing schema"}
+{"level":"info","time":"2026-03-05T22:21:12-05:00","message":"Database schema initialized successfully"}
+{"level":"info","time":"2026-03-05T22:21:12-05:00","message":"Database initialized successfully"}
+{"level":"info","time":"2026-03-05T22:21:12-05:00","message":"No snapshots found, starting with empty state"}
+{"level":"info","tick":0,"time":"2026-03-05T22:21:12-05:00","message":"No snapshot found, starting with empty state"}
+{"level":"info","starting_tick":0,"time":"2026-03-05T22:21:12-05:00","message":"Server initialization complete (foundation stub)"}
+{"level":"info","time":"2026-03-05T22:21:12-05:00","message":"Initializing session manager"}
+{"level":"info","port":2222,"max_players":50,"time":"2026-03-05T22:21:12-05:00","message":"SSH server configured"}
+{"level":"info","addr":":2222","time":"2026-03-05T22:21:12-05:00","message":"Starting SSH listener"}
+{"level":"info","addr":":2222","time":"2026-03-05T22:21:12-05:00","message":"SSH listener active"}
+{"level":"info","port":2222,"time":"2026-03-05T22:21:12-05:00","message":"SSH listener on port"}
+{"level":"info","time":"2026-03-05T22:21:12-05:00","message":"Server running - press Ctrl+C to shutdown"}
+{"level":"info","version":"milestone-1-foundation","ssh_port":2222,"tick_interval_ms":2000,"time":"2026-03-05T22:53:28-05:00","message":"BlackSector server starting"}
+{"level":"info","db_path":"blacksector.db","time":"2026-03-05T22:53:28-05:00","message":"Initializing database"}
+{"level":"info","db_path":"blacksector.db","time":"2026-03-05T22:53:28-05:00","message":"Initializing database"}
+{"level":"info","time":"2026-03-05T22:53:28-05:00","message":"Existing database opened successfully"}
+{"level":"info","time":"2026-03-05T22:53:28-05:00","message":"Database initialized successfully"}
+{"level":"info","time":"2026-03-05T22:53:28-05:00","message":"No snapshots found, starting with empty state"}
+{"level":"info","tick":0,"time":"2026-03-05T22:53:28-05:00","message":"No snapshot found, starting with empty state"}
+{"level":"info","starting_tick":0,"time":"2026-03-05T22:53:28-05:00","message":"Server initialization complete (foundation stub)"}
+{"level":"info","time":"2026-03-05T22:53:28-05:00","message":"Initializing session manager"}
+{"level":"info","time":"2026-03-05T22:53:28-05:00","message":"Initializing tick engine"}
+{"level":"info","initial_tick":0,"tick_interval_ms":2000,"snapshot_interval_ticks":100,"time":"2026-03-05T22:53:28-05:00","message":"Tick engine started"}
+{"level":"info","initial_tick":0,"tick_interval_ms":2000,"snapshot_interval_ticks":100,"time":"2026-03-05T22:53:28-05:00","message":"Tick engine initialized"}
+{"level":"info","port":2222,"max_players":50,"time":"2026-03-05T22:53:28-05:00","message":"SSH server configured"}
+{"level":"info","addr":":2222","time":"2026-03-05T22:53:28-05:00","message":"Starting SSH listener"}
+{"level":"info","addr":":2222","time":"2026-03-05T22:53:28-05:00","message":"SSH listener active"}
+{"level":"info","port":2222,"time":"2026-03-05T22:53:28-05:00","message":"SSH listener on port"}
+{"level":"info","time":"2026-03-05T22:53:28-05:00","message":"Initializing admin CLI"}
+{"level":"info","time":"2026-03-05T22:53:28-05:00","message":"Admin CLI started"}
+{"level":"info","time":"2026-03-05T22:53:28-05:00","message":"Admin command handler started"}
+{"level":"info","time":"2026-03-05T22:53:28-05:00","message":"Admin CLI initialized"}
+{"level":"info","time":"2026-03-05T22:53:28-05:00","message":"Tick loop starting"}
+{"level":"info","time":"2026-03-05T22:53:28-05:00","message":"Server running - press Ctrl+C to shutdown or type 'shutdown' to stop"}
+{"level":"info","time":"2026-03-05T22:53:28-05:00","message":"Tick loop starting"}
+{"level":"info","tick":0,"snapshot_interval_ticks":100,"time":"2026-03-05T22:53:28-05:00","message":"Snapshot triggered"}
+{"level":"info","tick":0,"timestamp":1772769208,"file":"snapshot_0_1772769208.json","time":"2026-03-05T22:53:28-05:00","message":"Snapshot saved successfully"}
+{"level":"info","remote_addr":"[::1]:54478","user":"testplayer","active_connections":1,"time":"2026-03-05T22:53:46-05:00","message":"SSH connection established"}
+{"level":"info","reason":"handshake_timeout","correlation_id":"","error":"failed to unmarshal handshake_response: unexpected end of JSON input","time":"2026-03-05T22:53:48-05:00","message":"Handshake rejected"}
+{"level":"info","error":"failed to unmarshal handshake_response: unexpected end of JSON input","remote_addr":"[::1]:54478","time":"2026-03-05T22:53:48-05:00","message":"Handshake failed, closing connection"}
+{"level":"info","time":"2026-03-05T22:54:04-05:00","message":"Tick engine stop requested"}
+{"level":"info","reason":"interrupt","time":"2026-03-05T22:54:04-05:00","message":"Shutdown signal received"}
+{"level":"info","time":"2026-03-05T22:54:04-05:00","message":"Initiating graceful shutdown"}
+{"level":"info","time":"2026-03-05T22:54:04-05:00","message":"Tick engine stop requested"}
+{"level":"info","time":"2026-03-05T22:54:04-05:00","message":"Waiting for current tick to complete"}
+{"level":"info","time":"2026-03-05T22:54:04-05:00","message":"Tick loop stopped"}
+{"level":"info","time":"2026-03-05T22:54:04-05:00","message":"Creating final snapshot"}
+{"level":"info","tick":19,"time":"2026-03-05T22:54:04-05:00","message":"Creating final snapshot"}
+{"level":"info","tick":19,"timestamp":1772769244,"file":"snapshot_19_1772769244.json","time":"2026-03-05T22:54:04-05:00","message":"Snapshot saved successfully"}
+{"level":"info","tick":19,"time":"2026-03-05T22:54:04-05:00","message":"Final snapshot saved successfully"}
+{"level":"info","time":"2026-03-05T22:54:04-05:00","message":"Final snapshot created successfully"}
+{"level":"info","time":"2026-03-05T22:54:04-05:00","message":"Sending shutdown messages to active sessions"}
+{"level":"info","sent_count":0,"total_connections":0,"time":"2026-03-05T22:54:04-05:00","message":"Sent shutdown messages to active sessions"}
+{"level":"info","time":"2026-03-05T22:54:04-05:00","message":"Closing SSH server"}
+{"level":"info","time":"2026-03-05T22:54:04-05:00","message":"Shutting down SSH server"}
+{"level":"info","timeout":4999.891208,"time":"2026-03-05T22:54:04-05:00","message":"Waiting for SSH connections to close"}
+{"level":"info","time":"2026-03-05T22:54:04-05:00","message":"SSH server shutdown complete"}
+{"level":"info","time":"2026-03-05T22:54:04-05:00","message":"SSH server closed"}
+{"level":"info","time":"2026-03-05T22:54:04-05:00","message":"Terminating all sessions"}
+{"level":"info","terminated_count":0,"time":"2026-03-05T22:54:04-05:00","message":"Terminated all sessions"}
+{"level":"info","time":"2026-03-05T22:54:04-05:00","message":"Closing database connection"}
+{"level":"info","time":"2026-03-05T22:54:04-05:00","message":"Closing database connection"}
+{"level":"info","time":"2026-03-05T22:54:04-05:00","message":"Database closed"}
+{"level":"info","time":"2026-03-05T22:54:04-05:00","message":"Server stopped"}
+{"level":"info","time":"2026-03-05T22:54:04-05:00","message":"Closing database connection"}
+{"level":"info","version":"milestone-1-foundation","ssh_port":2222,"tick_interval_ms":2000,"time":"2026-03-06T16:24:05-05:00","message":"BlackSector server starting"}
+{"level":"info","db_path":"blacksector.db","time":"2026-03-06T16:24:05-05:00","message":"Initializing database"}
+{"level":"info","db_path":"blacksector.db","time":"2026-03-06T16:24:05-05:00","message":"Initializing database"}
+{"level":"info","time":"2026-03-06T16:24:05-05:00","message":"Existing database opened successfully"}
+{"level":"info","time":"2026-03-06T16:24:05-05:00","message":"Database initialized successfully"}
+{"level":"info","tick":19,"timestamp":1772769244,"snapshot_version":"1.0","protocol_version":"1.0","file":"snapshot_19_1772769244.json","players":1,"sessions":0,"time":"2026-03-06T16:24:05-05:00","message":"Snapshot loaded successfully"}
+{"level":"info","snapshot_tick":19,"starting_tick":20,"snapshot_version":"1.0","protocol_version":"1.0","players":1,"sessions":0,"time":"2026-03-06T16:24:05-05:00","message":"Restored from snapshot"}
+{"level":"info","starting_tick":20,"time":"2026-03-06T16:24:05-05:00","message":"Server initialization complete (foundation stub)"}
+{"level":"info","time":"2026-03-06T16:24:05-05:00","message":"Initializing session manager"}
+{"level":"info","time":"2026-03-06T16:24:05-05:00","message":"Initializing tick engine"}
+{"level":"info","time":"2026-03-06T16:24:05-05:00","message":"Loading world configuration"}
+{"level":"info","path":"config/world/alpha_sector.json","time":"2026-03-06T16:24:05-05:00","message":"loading world configuration"}
+{"level":"info","regions":0,"systems":18,"ports":26,"connections":23,"commodities":7,"time":"2026-03-06T16:24:05-05:00","message":"world configuration loaded successfully"}
+{"level":"info","time":"2026-03-06T16:24:05-05:00","message":"validating world topology"}
+{"level":"info","time":"2026-03-06T16:24:05-05:00","message":"world topology validation successful"}
+{"level":"info","systems":18,"ports":26,"connections":23,"time":"2026-03-06T16:24:05-05:00","message":"World configuration loaded"}
+{"level":"info","time":"2026-03-06T16:24:05-05:00","message":"Initializing navigation subsystem"}
+{"level":"info","time":"2026-03-06T16:24:05-05:00","message":"Navigation subsystem initialized"}
+{"level":"info","time":"2026-03-06T16:24:05-05:00","message":"Initializing economy subsystem"}
+{"level":"info","count":7,"time":"2026-03-06T16:24:05-05:00","message":"commodities loaded"}
+{"level":"info","time":"2026-03-06T16:24:05-05:00","message":"Economy subsystem initialized"}
+{"level":"info","initial_tick":20,"tick_interval_ms":2000,"snapshot_interval_ticks":100,"time":"2026-03-06T16:24:05-05:00","message":"Tick engine started"}
+{"level":"info","initial_tick":20,"tick_interval_ms":2000,"snapshot_interval_ticks":100,"time":"2026-03-06T16:24:05-05:00","message":"Tick engine initialized"}
+{"level":"info","port":2222,"max_players":50,"time":"2026-03-06T16:24:05-05:00","message":"SSH server configured"}
+{"level":"info","addr":":2222","time":"2026-03-06T16:24:05-05:00","message":"Starting SSH listener"}
+{"level":"info","addr":":2222","time":"2026-03-06T16:24:05-05:00","message":"SSH listener active"}
+{"level":"info","port":2222,"time":"2026-03-06T16:24:05-05:00","message":"SSH listener on port"}
+{"level":"info","time":"2026-03-06T16:24:05-05:00","message":"Initializing admin CLI"}
+{"level":"info","time":"2026-03-06T16:24:05-05:00","message":"Admin CLI started"}
+{"level":"info","time":"2026-03-06T16:24:05-05:00","message":"Admin command handler started"}
+{"level":"info","time":"2026-03-06T16:24:05-05:00","message":"Admin CLI initialized"}
+{"level":"info","time":"2026-03-06T16:24:05-05:00","message":"Tick loop starting"}
+{"level":"info","time":"2026-03-06T16:24:05-05:00","message":"Server running - press Ctrl+C to shutdown or type 'shutdown' to stop"}
+{"level":"info","time":"2026-03-06T16:24:05-05:00","message":"Tick loop starting"}
+{"level":"info","remote_addr":"127.0.0.1:59807","user":"brian","active_connections":1,"time":"2026-03-06T16:26:09-05:00","message":"SSH connection established"}
+{"level":"info","reason":"handshake_timeout","correlation_id":"","error":"failed to unmarshal handshake_response: unexpected end of JSON input","time":"2026-03-06T16:26:11-05:00","message":"Handshake rejected"}
+{"level":"info","error":"failed to unmarshal handshake_response: unexpected end of JSON input","remote_addr":"127.0.0.1:59807","time":"2026-03-06T16:26:11-05:00","message":"Handshake failed, closing connection"}
+{"level":"info","tick":100,"snapshot_interval_ticks":100,"time":"2026-03-06T16:26:45-05:00","message":"Snapshot triggered"}
+{"level":"info","tick":100,"timestamp":1772832405,"file":"snapshot_100_1772832405.json","time":"2026-03-06T16:26:45-05:00","message":"Snapshot saved successfully"}
+{"level":"info","remote_addr":"[::1]:59835","user":"testplayer","active_connections":1,"time":"2026-03-06T16:29:09-05:00","message":"SSH connection established"}
+{"level":"info","reason":"invalid_token","correlation_id":"client-1772832549879220000","error":"invalid player token","time":"2026-03-06T16:29:09-05:00","message":"Handshake rejected"}
+{"level":"info","error":"invalid player token","remote_addr":"[::1]:59835","time":"2026-03-06T16:29:09-05:00","message":"Handshake failed, closing connection"}
+{"level":"info","remote_addr":"[::1]:59839","user":"testplayer","active_connections":1,"time":"2026-03-06T16:29:20-05:00","message":"SSH connection established"}
+{"level":"info","reason":"invalid_token","correlation_id":"client-1772832560400586000","error":"invalid player token","time":"2026-03-06T16:29:20-05:00","message":"Handshake rejected"}
+{"level":"info","error":"invalid player token","remote_addr":"[::1]:59839","time":"2026-03-06T16:29:20-05:00","message":"Handshake failed, closing connection"}
+{"level":"info","tick":200,"snapshot_interval_ticks":100,"time":"2026-03-06T16:30:05-05:00","message":"Snapshot triggered"}
+{"level":"info","tick":200,"timestamp":1772832605,"file":"snapshot_200_1772832605.json","time":"2026-03-06T16:30:05-05:00","message":"Snapshot saved successfully"}
+{"level":"info","remote_addr":"[::1]:59884","user":"testplayer","active_connections":1,"time":"2026-03-06T16:31:13-05:00","message":"SSH connection established"}
+{"level":"info","reason":"invalid_token","correlation_id":"client-1772832673270194000","error":"invalid player token","time":"2026-03-06T16:31:13-05:00","message":"Handshake rejected"}
+{"level":"info","error":"invalid player token","remote_addr":"[::1]:59884","time":"2026-03-06T16:31:13-05:00","message":"Handshake failed, closing connection"}
+{"level":"info","tick":300,"snapshot_interval_ticks":100,"time":"2026-03-06T16:33:25-05:00","message":"Snapshot triggered"}
+{"level":"info","tick":300,"timestamp":1772832805,"file":"snapshot_300_1772832805.json","time":"2026-03-06T16:33:25-05:00","message":"Snapshot saved successfully"}
+{"level":"info","time":"2026-03-06T16:35:18-05:00","message":"Tick engine stop requested"}
+{"level":"info","reason":"interrupt","time":"2026-03-06T16:35:18-05:00","message":"Shutdown signal received"}
+{"level":"info","time":"2026-03-06T16:35:18-05:00","message":"Initiating graceful shutdown"}
+{"level":"info","time":"2026-03-06T16:35:18-05:00","message":"Tick engine stop requested"}
+{"level":"info","time":"2026-03-06T16:35:18-05:00","message":"Waiting for current tick to complete"}
+{"level":"info","time":"2026-03-06T16:35:18-05:00","message":"Tick loop stopped"}
+{"level":"info","time":"2026-03-06T16:35:18-05:00","message":"Creating final snapshot"}
+{"level":"info","tick":357,"time":"2026-03-06T16:35:18-05:00","message":"Creating final snapshot"}
+{"level":"info","tick":357,"timestamp":1772832918,"file":"snapshot_357_1772832918.json","time":"2026-03-06T16:35:18-05:00","message":"Snapshot saved successfully"}
+{"level":"info","tick":357,"time":"2026-03-06T16:35:18-05:00","message":"Final snapshot saved successfully"}
+{"level":"info","time":"2026-03-06T16:35:18-05:00","message":"Final snapshot created successfully"}
+{"level":"info","time":"2026-03-06T16:35:18-05:00","message":"Sending shutdown messages to active sessions"}
+{"level":"info","sent_count":0,"total_connections":0,"time":"2026-03-06T16:35:18-05:00","message":"Sent shutdown messages to active sessions"}
+{"level":"info","time":"2026-03-06T16:35:18-05:00","message":"Closing SSH server"}
+{"level":"info","time":"2026-03-06T16:35:18-05:00","message":"Shutting down SSH server"}
+{"level":"info","timeout":4999.82625,"time":"2026-03-06T16:35:18-05:00","message":"Waiting for SSH connections to close"}
+{"level":"info","time":"2026-03-06T16:35:18-05:00","message":"SSH server shutdown complete"}
+{"level":"info","time":"2026-03-06T16:35:18-05:00","message":"SSH server closed"}
+{"level":"info","time":"2026-03-06T16:35:18-05:00","message":"Terminating all sessions"}
+{"level":"info","terminated_count":0,"time":"2026-03-06T16:35:18-05:00","message":"Terminated all sessions"}
+{"level":"info","time":"2026-03-06T16:35:18-05:00","message":"Closing database connection"}
+{"level":"info","time":"2026-03-06T16:35:18-05:00","message":"Closing database connection"}
+{"level":"info","time":"2026-03-06T16:35:18-05:00","message":"Database closed"}
+{"level":"info","time":"2026-03-06T16:35:18-05:00","message":"Server stopped"}
+{"level":"info","time":"2026-03-06T16:35:18-05:00","message":"Closing database connection"}
+{"level":"info","version":"milestone-1-foundation","ssh_port":2222,"tick_interval_ms":2000,"time":"2026-03-06T16:35:21-05:00","message":"BlackSector server starting"}
+{"level":"info","db_path":"blacksector.db","time":"2026-03-06T16:35:21-05:00","message":"Initializing database"}
+{"level":"info","db_path":"blacksector.db","time":"2026-03-06T16:35:21-05:00","message":"Initializing database"}
+{"level":"info","time":"2026-03-06T16:35:21-05:00","message":"Existing database opened successfully"}
+{"level":"info","time":"2026-03-06T16:35:21-05:00","message":"Database initialized successfully"}
+{"level":"info","tick":357,"timestamp":1772832918,"snapshot_version":"1.0","protocol_version":"1.0","file":"snapshot_357_1772832918.json","players":1,"sessions":0,"time":"2026-03-06T16:35:21-05:00","message":"Snapshot loaded successfully"}
+{"level":"info","snapshot_tick":357,"starting_tick":358,"snapshot_version":"1.0","protocol_version":"1.0","players":1,"sessions":0,"time":"2026-03-06T16:35:21-05:00","message":"Restored from snapshot"}
+{"level":"info","starting_tick":358,"time":"2026-03-06T16:35:21-05:00","message":"Server initialization complete (foundation stub)"}
+{"level":"info","time":"2026-03-06T16:35:21-05:00","message":"Initializing session manager"}
+{"level":"info","time":"2026-03-06T16:35:21-05:00","message":"Initializing tick engine"}
+{"level":"info","time":"2026-03-06T16:35:21-05:00","message":"Loading world configuration"}
+{"level":"info","path":"config/world/alpha_sector.json","time":"2026-03-06T16:35:21-05:00","message":"loading world configuration"}
+{"level":"info","regions":0,"systems":18,"ports":26,"connections":23,"commodities":7,"time":"2026-03-06T16:35:21-05:00","message":"world configuration loaded successfully"}
+{"level":"info","time":"2026-03-06T16:35:21-05:00","message":"validating world topology"}
+{"level":"info","time":"2026-03-06T16:35:21-05:00","message":"world topology validation successful"}
+{"level":"info","systems":18,"ports":26,"connections":23,"time":"2026-03-06T16:35:21-05:00","message":"World configuration loaded"}
+{"level":"info","time":"2026-03-06T16:35:21-05:00","message":"Initializing navigation subsystem"}
+{"level":"info","time":"2026-03-06T16:35:21-05:00","message":"Navigation subsystem initialized"}
+{"level":"info","time":"2026-03-06T16:35:21-05:00","message":"Initializing economy subsystem"}
+{"level":"info","count":7,"time":"2026-03-06T16:35:21-05:00","message":"commodities loaded"}
+{"level":"info","time":"2026-03-06T16:35:21-05:00","message":"Economy subsystem initialized"}
+{"level":"info","initial_tick":358,"tick_interval_ms":2000,"snapshot_interval_ticks":100,"time":"2026-03-06T16:35:21-05:00","message":"Tick engine started"}
+{"level":"info","initial_tick":358,"tick_interval_ms":2000,"snapshot_interval_ticks":100,"time":"2026-03-06T16:35:21-05:00","message":"Tick engine initialized"}
+{"level":"info","port":2222,"max_players":50,"time":"2026-03-06T16:35:21-05:00","message":"SSH server configured"}
+{"level":"info","addr":":2222","time":"2026-03-06T16:35:21-05:00","message":"Starting SSH listener"}
+{"level":"info","addr":":2222","time":"2026-03-06T16:35:21-05:00","message":"SSH listener active"}
+{"level":"info","port":2222,"time":"2026-03-06T16:35:21-05:00","message":"SSH listener on port"}
+{"level":"info","time":"2026-03-06T16:35:21-05:00","message":"Initializing admin CLI"}
+{"level":"info","time":"2026-03-06T16:35:21-05:00","message":"Admin CLI started"}
+{"level":"info","time":"2026-03-06T16:35:21-05:00","message":"Admin command handler started"}
+{"level":"info","time":"2026-03-06T16:35:21-05:00","message":"Admin CLI initialized"}
+{"level":"info","time":"2026-03-06T16:35:21-05:00","message":"Tick loop starting"}
+{"level":"info","time":"2026-03-06T16:35:21-05:00","message":"Server running - press Ctrl+C to shutdown or type 'shutdown' to stop"}
+{"level":"info","time":"2026-03-06T16:35:21-05:00","message":"Tick loop starting"}
+{"level":"info","remote_addr":"[::1]:59920","user":"testplayer","active_connections":1,"time":"2026-03-06T16:35:25-05:00","message":"SSH connection established"}
+{"level":"info","session_id":"577e69fc-c54c-4184-8d57-b11f923a48c6","player_id":"test-player-1","interface_mode":"TEXT","time":"2026-03-06T16:35:25-05:00","message":"Session created"}
+{"level":"info","player_id":"test-player-1","player_name":"TestPlayer","session_id":"577e69fc-c54c-4184-8d57-b11f923a48c6","time":"2026-03-06T16:35:25-05:00","message":"Player connected"}
+{"level":"info","session_id":"577e69fc-c54c-4184-8d57-b11f923a48c6","player_id":"test-player-1","remote_addr":"[::1]:59920","time":"2026-03-06T16:35:25-05:00","message":"Handshake successful, session active"}
+{"level":"info","tick":400,"snapshot_interval_ticks":100,"time":"2026-03-06T16:36:45-05:00","message":"Snapshot triggered"}
+{"level":"info","tick":400,"timestamp":1772833005,"file":"snapshot_400_1772833005.json","time":"2026-03-06T16:36:45-05:00","message":"Snapshot saved successfully"}
+{"level":"error","panic":"invalid memory address or nil pointer dereference","tick":435,"time":"2026-03-06T16:37:56-05:00","message":"PANIC in tick loop - attempting graceful shutdown"}
+{"level":"info","tick":435,"time":"2026-03-06T16:37:56-05:00","message":"Creating final snapshot"}
+{"level":"info","tick":435,"timestamp":1772833076,"file":"snapshot_435_1772833076.json","time":"2026-03-06T16:37:56-05:00","message":"Snapshot saved successfully"}
+{"level":"info","tick":435,"time":"2026-03-06T16:37:56-05:00","message":"Final snapshot saved successfully"}
+{"level":"info","reason":"admin command","time":"2026-03-06T16:37:56-05:00","message":"Shutdown signal received"}
+{"level":"info","time":"2026-03-06T16:37:56-05:00","message":"Initiating graceful shutdown"}
+{"level":"info","time":"2026-03-06T16:37:56-05:00","message":"Tick engine stop requested"}
+{"level":"info","time":"2026-03-06T16:37:56-05:00","message":"Waiting for current tick to complete"}
+{"level":"info","time":"2026-03-06T16:37:56-05:00","message":"Tick loop stopped"}
+{"level":"info","time":"2026-03-06T16:37:56-05:00","message":"Creating final snapshot"}
+{"level":"info","tick":435,"time":"2026-03-06T16:37:56-05:00","message":"Creating final snapshot"}
+{"level":"info","tick":435,"timestamp":1772833076,"file":"snapshot_435_1772833076.json","time":"2026-03-06T16:37:56-05:00","message":"Snapshot saved successfully"}
+{"level":"info","tick":435,"time":"2026-03-06T16:37:56-05:00","message":"Final snapshot saved successfully"}
+{"level":"info","time":"2026-03-06T16:37:56-05:00","message":"Final snapshot created successfully"}
+{"level":"info","time":"2026-03-06T16:37:56-05:00","message":"Sending shutdown messages to active sessions"}
+{"level":"info","sent_count":1,"total_connections":1,"time":"2026-03-06T16:37:56-05:00","message":"Sent shutdown messages to active sessions"}
+{"level":"info","time":"2026-03-06T16:37:56-05:00","message":"Closing SSH server"}
+{"level":"info","time":"2026-03-06T16:37:56-05:00","message":"Shutting down SSH server"}
+{"level":"info","timeout":4999.760834,"time":"2026-03-06T16:37:56-05:00","message":"Waiting for SSH connections to close"}
+{"level":"info","time":"2026-03-06T16:37:56-05:00","message":"SSH server shutdown complete"}
+{"level":"info","time":"2026-03-06T16:37:56-05:00","message":"SSH server closed"}
+{"level":"info","time":"2026-03-06T16:37:56-05:00","message":"Terminating all sessions"}
+{"level":"info","terminated_count":1,"time":"2026-03-06T16:37:56-05:00","message":"Terminated all sessions"}
+{"level":"info","time":"2026-03-06T16:37:56-05:00","message":"Closing database connection"}
+{"level":"info","time":"2026-03-06T16:37:56-05:00","message":"Closing database connection"}
+{"level":"info","time":"2026-03-06T16:37:56-05:00","message":"Database closed"}
+{"level":"info","time":"2026-03-06T16:37:56-05:00","message":"Server stopped"}
+{"level":"info","time":"2026-03-06T16:37:56-05:00","message":"Closing database connection"}
+{"level":"info","version":"dev","git_commit":"9aa8afa","ssh_port":2222,"tick_interval_ms":2000,"time":"2026-03-08T15:43:55-04:00","message":"BlackSector server starting"}
+{"level":"info","db_path":"blacksector.db","time":"2026-03-08T15:43:55-04:00","message":"Initializing database"}
+{"level":"info","db_path":"blacksector.db","time":"2026-03-08T15:43:55-04:00","message":"Initializing database"}
+{"level":"info","time":"2026-03-08T15:43:55-04:00","message":"Checking for pending migrations"}
+{"level":"error","error":"failed to initialize database: failed to apply migrations: failed to apply migration 001_initial_schema.sql: failed to execute migration SQL: SQL logic error: table players already exists (1)","time":"2026-03-08T15:43:55-04:00","message":"Failed to initialize database"}
+{"level":"info","version":"dev","git_commit":"9aa8afa","ssh_port":2222,"tick_interval_ms":2000,"time":"2026-03-08T15:43:57-04:00","message":"BlackSector server starting"}
+{"level":"info","db_path":"blacksector.db","time":"2026-03-08T15:43:57-04:00","message":"Initializing database"}
+{"level":"info","db_path":"blacksector.db","time":"2026-03-08T15:43:57-04:00","message":"Initializing database"}
+{"level":"info","time":"2026-03-08T15:43:57-04:00","message":"Checking for pending migrations"}
+{"level":"error","error":"failed to initialize database: failed to apply migrations: failed to apply migration 001_initial_schema.sql: failed to execute migration SQL: SQL logic error: table players already exists (1)","time":"2026-03-08T15:43:57-04:00","message":"Failed to initialize database"}

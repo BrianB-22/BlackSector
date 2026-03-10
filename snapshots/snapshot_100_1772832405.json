@@ -1,0 +1,23 @@
+{
+  "snapshot_version": "1.0",
+  "tick": 100,
+  "timestamp": 1772832405,
+  "server_name": "Black Sector",
+  "protocol_version": "1.0",
+  "state": {
+    "players": [
+      {
+        "PlayerID": "test-player-1",
+        "PlayerName": "TestPlayer",
+        "SSHUsername": "",
+        "TokenHash": "$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy",
+        "PasswordHash": "",
+        "Credits": 10000,
+        "CreatedAt": 1772767350,
+        "LastLoginAt": null,
+        "IsBanned": false
+      }
+    ],
+    "sessions": null
+  }
+}

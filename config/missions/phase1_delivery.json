@@ -1,23 +1,53 @@
 {
   "missions": [
     {
-      "mission_id": "delivery_food_high_sec_01",
-      "name": "Food Shipment — High Priority",
-      "description": "A mining colony is running short on food supplies. Deliver 15 units to their port.",
+      "mission_id": "starter_food_run",
+      "name": "Emergency Food Supplies",
+      "description": "New Haven is running low on food supplies. Deliver a shipment to help the station.",
       "version": "1.0.0",
-      "author": "core",
+      "author": "BlackSector Team",
       "enabled": true,
       "repeatable": true,
-      "repeat_cooldown_ticks": 150,
+      "repeat_cooldown_ticks": 600,
       "security_zones": ["high"],
-      "expiry_ticks": 500,
+      "expiry_ticks": 800,
       "objectives": [
         {
           "objective_id": "deliver_food",
           "type": "deliver_commodity",
-          "description": "Deliver 15 units of food supplies to the designated mining port.",
+          "description": "Deliver 10 units of Food Supplies to New Haven Central Market.",
           "parameters": {
             "commodity_id": "food_supplies",
+            "quantity": 10,
+            "port_id": "new_haven_market"
+          },
+          "failure_condition": null
+        }
+      ],
+      "rewards": {
+        "credits": 1500,
+        "items": [],
+        "upgrades": []
+      }
+    },
+    {
+      "mission_id": "helios_ore_delivery",
+      "name": "Ore for Helios",
+      "description": "Helios Reach Extraction Base needs raw ore to keep operations running. A straightforward delivery job.",
+      "version": "1.0.0",
+      "author": "BlackSector Team",
+      "enabled": true,
+      "repeatable": true,
+      "repeat_cooldown_ticks": 700,
+      "security_zones": ["high"],
+      "expiry_ticks": 900,
+      "objectives": [
+        {
+          "objective_id": "deliver_ore",
+          "type": "deliver_commodity",
+          "description": "Deliver 15 units of Raw Ore to Helios Reach Extraction Base.",
+          "parameters": {
+            "commodity_id": "raw_ore",
             "quantity": 15,
             "port_id": "helios_reach_extraction"
           },
@@ -25,119 +55,197 @@
         }
       ],
       "rewards": {
-        "credits": 800
+        "credits": 2000,
+        "items": [],
+        "upgrades": []
       }
     },
     {
-      "mission_id": "delivery_ore_industrial_01",
-      "name": "Ore Consignment — Industrial Order",
-      "description": "A trading hub needs raw ore for processing. Deliver 20 units and earn a premium.",
+      "mission_id": "vega_electronics_rush",
+      "name": "Electronics Rush Order",
+      "description": "Vega Prime Exchange has a rush order for electronics. Time is tight but the pay is good.",
       "version": "1.0.0",
-      "author": "core",
+      "author": "BlackSector Team",
       "enabled": true,
       "repeatable": true,
-      "repeat_cooldown_ticks": 150,
-      "security_zones": ["high"],
-      "expiry_ticks": 500,
-      "objectives": [
-        {
-          "objective_id": "deliver_ore",
-          "type": "deliver_commodity",
-          "description": "Deliver 20 units of raw ore to the designated trading port.",
-          "parameters": {
-            "commodity_id": "raw_ore",
-            "quantity": 20,
-            "port_id": "vega_prime_exchange"
-          },
-          "failure_condition": null
-        }
-      ],
-      "rewards": {
-        "credits": 1000
-      }
-    },
-    {
-      "mission_id": "delivery_fuel_low_sec_01",
-      "name": "Fuel Run — Dangerous Route",
-      "description": "An isolated refueling post in low security space needs fuel cells. High risk, high reward.",
-      "version": "1.0.0",
-      "author": "core",
-      "enabled": true,
-      "repeatable": true,
-      "repeat_cooldown_ticks": 100,
-      "security_zones": ["low"],
-      "expiry_ticks": 400,
-      "objectives": [
-        {
-          "objective_id": "deliver_fuel",
-          "type": "deliver_commodity",
-          "description": "Deliver 10 units of fuel cells to the low security refueling post.",
-          "parameters": {
-            "commodity_id": "fuel_cells",
-            "quantity": 10,
-            "port_id": "outpost_9_fuel"
-          },
-          "failure_condition": null
-        }
-      ],
-      "rewards": {
-        "credits": 2000
-      }
-    },
-    {
-      "mission_id": "delivery_electronics_01",
-      "name": "Electronics Delivery — Mining Contract",
-      "description": "A mining operation urgently needs electronics for equipment repairs.",
-      "version": "1.0.0",
-      "author": "core",
-      "enabled": true,
-      "repeatable": true,
-      "repeat_cooldown_ticks": 200,
+      "repeat_cooldown_ticks": 800,
       "security_zones": ["high"],
       "expiry_ticks": 600,
       "objectives": [
         {
           "objective_id": "deliver_electronics",
           "type": "deliver_commodity",
-          "description": "Deliver 5 units of electronics to the designated mining port.",
+          "description": "Deliver 8 units of Electronics to Vega Prime Exchange.",
           "parameters": {
             "commodity_id": "electronics",
+            "quantity": 8,
+            "port_id": "vega_prime_exchange"
+          },
+          "failure_condition": {
+            "type": "ship_destroyed"
+          }
+        }
+      ],
+      "rewards": {
+        "credits": 3500,
+        "items": [],
+        "upgrades": []
+      }
+    },
+    {
+      "mission_id": "meridian_machinery_contract",
+      "name": "Industrial Supply Contract",
+      "description": "Meridian Industrial Supply needs machinery for their manufacturing operations. Standard delivery contract.",
+      "version": "1.0.0",
+      "author": "BlackSector Team",
+      "enabled": true,
+      "repeatable": true,
+      "repeat_cooldown_ticks": 750,
+      "security_zones": ["high"],
+      "expiry_ticks": 1000,
+      "objectives": [
+        {
+          "objective_id": "deliver_machinery",
+          "type": "deliver_commodity",
+          "description": "Deliver 12 units of Machinery to Meridian Industrial Supply.",
+          "parameters": {
+            "commodity_id": "machinery",
+            "quantity": 12,
+            "port_id": "meridian_industrial"
+          },
+          "failure_condition": null
+        }
+      ],
+      "rewards": {
+        "credits": 4000,
+        "items": [],
+        "upgrades": []
+      }
+    },
+    {
+      "mission_id": "deadrock_danger_run",
+      "name": "Deadrock Supply Run",
+      "description": "Deadrock Excavation Post is desperate for food supplies. Low security space means high pay, but watch for pirates.",
+      "version": "1.0.0",
+      "author": "BlackSector Team",
+      "enabled": true,
+      "repeatable": true,
+      "repeat_cooldown_ticks": 900,
+      "security_zones": ["low"],
+      "expiry_ticks": 700,
+      "objectives": [
+        {
+          "objective_id": "deliver_food_deadrock",
+          "type": "deliver_commodity",
+          "description": "Deliver 15 units of Food Supplies to Deadrock Excavation Post.",
+          "parameters": {
+            "commodity_id": "food_supplies",
+            "quantity": 15,
+            "port_id": "deadrock_excavation"
+          },
+          "failure_condition": {
+            "type": "ship_destroyed"
+          }
+        }
+      ],
+      "rewards": {
+        "credits": 5500,
+        "items": [],
+        "upgrades": []
+      }
+    },
+    {
+      "mission_id": "rust_belt_machinery",
+      "name": "Rust Belt Equipment Delivery",
+      "description": "The aging mining operations in Rust Belt need machinery replacements. Dangerous route, premium pay.",
+      "version": "1.0.0",
+      "author": "BlackSector Team",
+      "enabled": true,
+      "repeatable": true,
+      "repeat_cooldown_ticks": 850,
+      "security_zones": ["low"],
+      "expiry_ticks": 800,
+      "objectives": [
+        {
+          "objective_id": "deliver_machinery_rust",
+          "type": "deliver_commodity",
+          "description": "Deliver 10 units of Machinery to Rust Belt Primary Extraction.",
+          "parameters": {
+            "commodity_id": "machinery",
+            "quantity": 10,
+            "port_id": "rust_belt_primary"
+          },
+          "failure_condition": {
+            "type": "ship_destroyed"
+          }
+        }
+      ],
+      "rewards": {
+        "credits": 6000,
+        "items": [],
+        "upgrades": []
+      }
+    },
+    {
+      "mission_id": "terminus_luxury_haul",
+      "name": "Luxury Goods to Terminus",
+      "description": "Terminus Market will pay top credit for luxury goods. The journey is long and dangerous, but the reward is substantial.",
+      "version": "1.0.0",
+      "author": "BlackSector Team",
+      "enabled": true,
+      "repeatable": true,
+      "repeat_cooldown_ticks": 1000,
+      "security_zones": ["low"],
+      "expiry_ticks": 1200,
+      "objectives": [
+        {
+          "objective_id": "deliver_luxury_terminus",
+          "type": "deliver_commodity",
+          "description": "Deliver 5 units of Luxury Goods to Terminus Market.",
+          "parameters": {
+            "commodity_id": "luxury_goods",
             "quantity": 5,
+            "port_id": "terminus_market"
+          },
+          "failure_condition": {
+            "type": "ship_destroyed"
+          }
+        }
+      ],
+      "rewards": {
+        "credits": 8500,
+        "items": [],
+        "upgrades": []
+      }
+    },
+    {
+      "mission_id": "callisto_fuel_emergency",
+      "name": "Fuel Cell Emergency",
+      "description": "Callisto Extraction Base is running critically low on fuel cells. Quick delivery needed.",
+      "version": "1.0.0",
+      "author": "BlackSector Team",
+      "enabled": true,
+      "repeatable": true,
+      "repeat_cooldown_ticks": 650,
+      "security_zones": ["high"],
+      "expiry_ticks": 500,
+      "objectives": [
+        {
+          "objective_id": "deliver_fuel_callisto",
+          "type": "deliver_commodity",
+          "description": "Deliver 20 units of Fuel Cells to Callisto Extraction Base.",
+          "parameters": {
+            "commodity_id": "fuel_cells",
+            "quantity": 20,
             "port_id": "callisto_extraction_base"
           },
           "failure_condition": null
         }
       ],
       "rewards": {
-        "credits": 1800
-      }
-    },
-    {
-      "mission_id": "delivery_luxury_prestige_01",
-      "name": "Luxury Cargo — Prestige Run",
-      "description": "A wealthy client needs luxury goods delivered discreetly to a remote trading post.",
-      "version": "1.0.0",
-      "author": "core",
-      "enabled": true,
-      "repeatable": true,
-      "repeat_cooldown_ticks": 300,
-      "security_zones": ["high", "low"],
-      "expiry_ticks": 800,
-      "objectives": [
-        {
-          "objective_id": "deliver_luxury",
-          "type": "deliver_commodity",
-          "description": "Deliver 3 units of luxury goods to the designated port.",
-          "parameters": {
-            "commodity_id": "luxury_goods",
-            "quantity": 3,
-            "port_id": "terminus_market"
-          },
-          "failure_condition": null
-        }
-      ],
-      "rewards": {
-        "credits": 3500
+        "credits": 2800,
+        "items": [],
+        "upgrades": []
       }
     }
   ]
